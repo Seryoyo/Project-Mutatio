@@ -1,4 +1,0 @@
-repository "Up the water spout (2025 Spring Game Jam)/Up The Waterspout@1375081225173@cloud"
-  path "/"
-    br "/main"
-    co "/main"
