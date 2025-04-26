@@ -13,15 +13,16 @@ public class StartMenu : MonoBehaviour
     }
 
     public void QuitGame(){
-     /*   Debug.Log("Quitting Game...");
-        Application.Quit();*/
+        Debug.Log("Quitting Game...");
+        Application.Quit();
+    }
 
 
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
         Application.Quit();
 
-    }
+    }*/
 
 }
