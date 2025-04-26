@@ -1,88 +1,172 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour
+public class Player : Mover
 {
-    private BoxCollider2D boxCollider;
-    private Vector3 moveDelta;
-    private RaycastHit2D hit;
-    public float moveSpeed = 5.0f;
     private Animator animator;
+    SpriteRenderer tiller;
+    SpriteRenderer spoon;
+    Weapon weapon;
 
     // Animation state names
     private const string MALT_WALK = "MaltWalk";
     private const string MALT_IDLE = "MaltIdle";
     private const string MALT_ATTACK = "MaltAttack";
     private bool isAttacking = false;
+    private float scanRadius = 3f; // npc detection
+    public static Player instance;
 
-    private void Start()
+
+    private void Awake()
     {
-        boxCollider = GetComponent<BoxCollider2D>();
-        animator = GetComponentInChildren<Animator>(); // Get the Animator component from the child PSB
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        hitpoint = maxHitpoint; // start w/ full hp
+        DontDestroyOnLoad(gameObject);
+    }
 
+    private new void Start()
+    {
+        base.Start();
+        GameManager.instance.player = this;
+        UpdateHealthBar();
+        animator = GetComponentInChildren<Animator>(); // Get the Animator component from the child PSB
         if (animator == null)
             Debug.LogWarning("Animator component not found in children!");
+        tiller = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "tiller").GetComponent<SpriteRenderer>();
+        spoon = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "spoon").GetComponent<SpriteRenderer>();
+        weapon = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "weapon_bone").GetComponent<Weapon>();
+        EquipWeapon((Item.Equippable)GameManager.instance.inventoryMenu.GetItemFromName(GameManager.instance.currentWeapon)); // laugh up a storm why don't you
     }
+
+
 
     private void FixedUpdate()
     {
         if (isAttacking)
-            return; // No moving while attacking... for now.
-                    // Later: Maybe add attack cancellation and only deal damage at a certain point in the animation
+            return;
 
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
 
-        // Reset moveDelta
-        moveDelta = new Vector3(x, y, 0) * moveSpeed;
 
         // Check if character is moving
         bool isMoving = Mathf.Abs(moveDelta.x) > 0.1f || Mathf.Abs(moveDelta.y) > 0.1f;
 
         // Update animator w/ movement state
-        if (animator != null)
+        if (!isMoving && Input.GetKeyDown(KeyCode.E)) // Attack!!!
         {
-            if (!isMoving && Input.GetKeyDown(KeyCode.E)) // Attack!!!
+            Attack();
+        }
+        else if (isMoving)
+        { // Walk
+            animator.Play(MALT_WALK);
+        }
+        else
+        { // doin nothin
+            animator.Play(MALT_IDLE);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, scanRadius);
+            NPC nearestNPC = null;
+
+            foreach (Collider2D hit in hits)
             {
-                animator.Play(MALT_ATTACK);
-                isAttacking = true;
-                StartCoroutine(ResetAttackState()); // Make sure it only plays once
-            }
-            else if (isMoving) { // Walk
-                animator.Play(MALT_WALK);
-            }
-            else { // doin nothin
-                animator.Play(MALT_IDLE);
+                nearestNPC = hit.GetComponent<NPC>();
+                if (nearestNPC != null)
+                {
+                    nearestNPC.ToggleTextbox(); // Only toggle textbox for nearest NPC's message
+                    break;
+                }
             }
         }
 
-        // Swap sprite direction
-        FlipSprite(moveDelta.x);
+        UpdateMotor(new Vector3(x, y, 0));
 
-        // Make sure we can move in this direction by casting a box there first.
-        // If the box returns null, we're free to move.
-        hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Actor", "Blocking"));
-        if (hit.collider == null)
-            transform.Translate(0, moveDelta.y * Time.deltaTime, 0);
-
-        hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, 0), Mathf.Abs(moveDelta.x * Time.deltaTime), LayerMask.GetMask("Actor", "Blocking"));
-        if (hit.collider == null)
-            transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
     }
 
-    public void FlipSprite(float xDelta)
+    public void EquipWeapon(Item.Equippable newWeapon = null)
     {
-        if (xDelta  > 0)
-            transform.localScale = Vector3.one;
-        else if (xDelta < 0)
-            transform.localScale = new Vector3(-1, 1, 1);
+        if (newWeapon != null) { 
+            GameManager.instance.currentWeapon = newWeapon.itemID;
+            weapon.damagePoint = newWeapon.dmg;
+            weapon.pushForce = newWeapon.pushForce;
+            switch (GameManager.instance.currentWeapon.ToLower())
+            {
+                case ("tiller"):
+                    tiller.enabled = true;
+                    spoon.enabled = false;
+                    break;
+                case ("spoon"):
+                    tiller.enabled = false;
+                    spoon.enabled = true;
+                    break;
+                default:
+                    break;
+            }
+        } else // Default, no-weapon value
+        {   
+            weapon.damagePoint = 1;
+            weapon.pushForce = 4f;
+            tiller.enabled = false;
+            spoon.enabled = false;
+        }
     }
 
-    private IEnumerator ResetAttackState()
+    public void UnequipWeapon()
+    {
+        GameManager.instance.currentWeapon = "";
+        tiller.enabled = false;
+        spoon.enabled = false;
+        weapon.damagePoint = 1;
+        weapon.pushForce = 4f;
+    }
+
+    protected override void ReceiveDamage(Damage dmg)
+    {
+        base.ReceiveDamage(dmg);
+    }
+
+    private void Attack()
+    {
+        animator.Play(MALT_ATTACK);
+        isAttacking = true;
+        StartCoroutine(ResetAttackState(0.6f)); // Make sure it only plays once
+                                                // This way seems kind of dumb so i feel like there's a better way
+    }
+
+    private IEnumerator ResetAttackState(float duration)
     {
         // Wait for the attack animation to finish
-        yield return new WaitForSeconds(0.4f); // It's 0.45 really but who cares man
+        yield return new WaitForSeconds(duration);
         isAttacking = false;
+    }
+
+    protected override void UpdateHealthBar()
+    {
+        base.UpdateHealthBar();
+        // TODO: Update in inventory UI as well?
+    }
+
+    protected override void Death()
+    {
+        // this is broken
+        // change to gameover scene
+
+
+        // Heal(maxHitpoint);
+        // SceneManager.LoadScene("House");
+        // transform.position = new Vector3(5.5f, -1.3f, 0);
     }
 }

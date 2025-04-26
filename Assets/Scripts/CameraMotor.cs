@@ -10,6 +10,11 @@ public class CameraMotor : MonoBehaviour
     public float boundX = 0.15f;
     public float boundY = 0.15f;
 
+    private void Start()
+    {
+        lookAt = GameManager.instance.player.transform;
+    }
+
     // Late update so we can move camera after player moves w/ FixedUpdate
     // AKA: avoid small (but annoying) desync
     private void LateUpdate()
