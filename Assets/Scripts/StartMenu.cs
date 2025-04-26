@@ -9,20 +9,15 @@ public class StartMenu : MonoBehaviour
     public void LoadGame()
     {
         Debug.Log("Loading Game");
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("TestScene");
     }
 
     public void QuitGame(){
         Debug.Log("Quitting Game...");
-        Application.Quit();
-    }
-
-
-/*#if UNITY_EDITOR
+        #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-#endif
+        #else
         Application.Quit();
-
-    }*/
-
+        #endif
+    }
 }
