@@ -14,20 +14,24 @@ public class Enemy : Mover
     public float chaseLength = 5; // 5 meter chase range
     private bool chasing;
     private bool collidingWithPlayer;
+
     private Transform playerTransform;
     private Vector3 startingPosition;
+
     public ContactFilter2D filter;
+
     // Hitbox
     BoxCollider2D hitbox; // Weapon hitbox
     private Collider2D[] hits = new Collider2D[10];
-    public string droppedItem = null; // Name of dropped item. No RNG because I am kind and benevolent and do not want my players to suffer
+
+    public string droppedItem = null;
 
 
     protected override void Start()
     {
         base.Start(); // Get usual boxcollider
         animator = GetComponentInChildren<Animator>(); // Get the Animator component from the child PSB
-        hitbox = GetComponentsInChildren<BoxCollider2D>().FirstOrDefault(c => c.CompareTag("Damager"));
+        // hitbox = GetComponentsInChildren<BoxCollider2D>().FirstOrDefault(c => c.CompareTag("Damager"));
         playerTransform = GameManager.instance.player.transform;
         startingPosition = transform.position;
     }
@@ -48,7 +52,8 @@ public class Enemy : Mover
                 {
                     if (!collidingWithPlayer)
                     {
-                        if (animator != null && WalkAnimation != null) { animator.Play(WalkAnimation); };
+                        if (animator != null && WalkAnimation != null) { animator.Play(WalkAnimation); }
+                        ;
                         UpdateMotor((playerTransform.position - transform.position).normalized);
                     }
                     else // colliding w/ player
@@ -83,6 +88,17 @@ public class Enemy : Mover
                 chasing = false;
             }
         }
+
+        FacePlayer();
+    }
+
+    protected void FacePlayer()
+    {
+        float directionToPlayer = (playerTransform.position - transform.position).normalized.x;
+        if (directionToPlayer > 0)
+            transform.localScale = new Vector3(1, 1, 1);
+        else
+            transform.localScale = new Vector3(-1, 1, 1);
     }
 
     protected override void Death()
