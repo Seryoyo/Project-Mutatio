@@ -1597,20 +1597,11 @@ AnimationClip:
         weightedMode: 0
         inWeight: 0
         outWeight: 0
-      - serializedVersion: 3
-        time: 0.6666667
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Enabled
-    path: larmbone1/larmbone2/larmbone3
+    path: larmatk
     classID: 61
     script: {fileID: 0}
     flags: 0
@@ -1812,7 +1803,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2509627419
+      path: 2158632020
       attribute: 3305885265
       script: {fileID: 0}
       typeID: 61
@@ -7261,20 +7252,11 @@ AnimationClip:
         weightedMode: 0
         inWeight: 0
         outWeight: 0
-      - serializedVersion: 3
-        time: 0.6666667
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Enabled
-    path: larmbone1/larmbone2/larmbone3
+    path: larmatk
     classID: 61
     script: {fileID: 0}
     flags: 0

@@ -22,7 +22,6 @@ public class Fighter : MonoBehaviour
     protected void Start()
     {
         hpAmt = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "hpAmt").GetComponent<RectTransform>();
-        Debug.Log($"hpAmt: {hpAmt == null}");
     }
 
     protected virtual void ReceiveDamage(Damage dmg)

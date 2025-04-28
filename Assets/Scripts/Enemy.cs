@@ -21,7 +21,7 @@ public class Enemy : Mover
     public ContactFilter2D filter;
 
     // Hitbox
-    BoxCollider2D hitbox; // Weapon hitbox
+    public BoxCollider2D weaponHitbox; // Weapon hitbox
     private Collider2D[] hits = new Collider2D[10];
 
     public string droppedItem = null;
@@ -31,7 +31,6 @@ public class Enemy : Mover
     {
         base.Start(); // Get usual boxcollider
         animator = GetComponentInChildren<Animator>(); // Get the Animator component from the child PSB
-        // hitbox = GetComponentsInChildren<BoxCollider2D>().FirstOrDefault(c => c.CompareTag("Damager"));
         playerTransform = GameManager.instance.player.transform;
         startingPosition = transform.position;
     }
@@ -73,13 +72,25 @@ public class Enemy : Mover
 
                 collidingWithPlayer = false;
                 boxCollider.OverlapCollider(filter, hits);
-                for (int i = 0; i < hits.Length; i++)
+                foreach (var hit in hits)
                 {
-                    if (hits[i] == null)
+                    if (hits == null)
                         continue;
-                    if (hits[i].tag == "Fighter" && hits[i].name == "Player")
+                    if (hits.name == "Player")
                         collidingWithPlayer = true;
-                    hits[i] = null;
+                    hits = null;
+                }
+
+                if (weaponHitbox != null)
+                {
+                    Collider2D[] hits = Physics2D.OverlapBoxAll((Vector2)weaponHitbox.transform.position, weaponHitbox.size, filter.layerMask);
+                    foreach (var hit in hits)
+                    {
+                        if (hit == null)
+                            continue;
+                        if (hit.name == "Player")
+                            collidingWithPlayer = true;
+                    }
                 }
             }
             else

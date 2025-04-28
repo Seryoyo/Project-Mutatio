@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class Weapon : Collidable
 {
-    
+    public Fighter owner;
     public int damagePoint = 1;
     public float pushForce = 4.0f;
-    private SpriteRenderer spriteRenderer;
+    // private SpriteRenderer spriteRenderer;
 
     // Swing
     private float cooldown = 0.5f;
@@ -18,7 +18,7 @@ public class Weapon : Collidable
     protected override void Start()
     {
         base.Start();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        // spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     protected override void Update()
@@ -37,14 +37,10 @@ public class Weapon : Collidable
 
     protected override void OnCollide(Collider2D coll) {
         if (coll.tag == "Fighter") {
-            // Check if the collider is a parent of this GameObject
-            Transform current = transform;
-            while (current.parent != null)
-            {
-                if (current.parent.gameObject == coll.gameObject)
-                    return;
-                current = current.parent;
-            }
+
+            // Check if the collider is on the same side (enemy/player), e.g. prevent enemies damaging each other or player damaging itself
+            if (owner.gameObject.layer == coll.gameObject.layer)
+                return;
 
             Damage dmg = new Damage()
             {

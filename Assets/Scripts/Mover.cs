@@ -18,27 +18,27 @@ public abstract class Mover : Fighter
         boxCollider = GetComponent<BoxCollider2D>();
     }
 
-    protected virtual void UpdateMotor(Vector3 input)
+    protected void UpdateMotor(Vector3 input)
     {
+        Vector2 move;
         moveDelta = new Vector3(input.x * xSpeed, input.y * ySpeed, 0);
-
         FlipSprite(moveDelta.x);
-
-        // Add push vector, if anny
         moveDelta += pushDirection;
-        // Reduce push force every frame based off recovery speed
         pushDirection = Vector3.Lerp(pushDirection, Vector3.zero, pushRecoverySpeed);
 
-        // Make sure we can move in this direction by casting a box there first.
-        // If the box returns null, we're free to move.
-        hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Actor", "Blocking"));
-        if (hit.collider == null)
+        RaycastHit2D[] hits = new RaycastHit2D[1];
+
+        move = new Vector2(0, moveDelta.y) * Time.deltaTime;
+        int count = boxCollider.Cast(move.normalized, hits, move.magnitude);
+        if (count == 0)
             transform.Translate(0, moveDelta.y * Time.deltaTime, 0);
 
-        hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, 0), Mathf.Abs(moveDelta.x * Time.deltaTime), LayerMask.GetMask("Actor", "Blocking"));
-        if (hit.collider == null)
+        move = new Vector2(moveDelta.x, 0) * Time.deltaTime;
+        count = boxCollider.Cast(move.normalized, hits, move.magnitude);
+        if (count == 0)
             transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
     }
+
 
 
     public void FlipSprite(float xDelta)
