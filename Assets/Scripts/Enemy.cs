@@ -72,13 +72,13 @@ public class Enemy : Mover
 
                 collidingWithPlayer = false;
                 boxCollider.OverlapCollider(filter, hits);
-                foreach (var hit in hits)
+                for (int i = 0; i < hits.Length; i++)
                 {
-                    if (hits == null)
+                    if (hits[i] == null)
                         continue;
-                    if (hits.name == "Player")
+                    if (hits[i].name == "Player")
                         collidingWithPlayer = true;
-                    hits = null;
+                    hits[i] = null;
                 }
 
                 if (weaponHitbox != null)

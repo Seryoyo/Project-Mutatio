@@ -150,8 +150,8 @@ GameObject:
   m_Component:
   - component: {fileID: 262745077}
   - component: {fileID: 262745078}
-  - component: {fileID: 262745079}
   - component: {fileID: 262745080}
+  - component: {fileID: 262745081}
   m_Layer: 7
   m_Name: FloaterEnemy
   m_TagString: Fighter
@@ -221,46 +221,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.1644988, y: 1.6168716}
   m_EdgeRadius: 0
---- !u!114 &262745079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 262745075}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfcf125d4a0f2f2458c06e7335524224, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitpoint: 10
-  maxHitpoint: 10
-  pushRecoverySpeed: 0.2
-  hpAmt: {fileID: 749175671}
-  ySpeed: 0.5
-  xSpeed: 1
-  IdleAnimation: 
-  AttackAnimation: 
-  WalkAnimation: 
-  AttackAnimationDuration: 0
-  triggerLength: 10
-  chaseLength: 10
-  filter:
-    useTriggers: 0
-    useLayerMask: 0
-    useDepth: 0
-    useOutsideDepth: 0
-    useNormalAngle: 0
-    useOutsideNormalAngle: 0
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 0
-    minDepth: 0
-    maxDepth: 0
-    minNormalAngle: 0
-    maxNormalAngle: 0
-  weaponHitbox: {fileID: 0}
-  droppedItem: 
 --- !u!50 &262745080
 Rigidbody2D:
   serializedVersion: 4
@@ -288,6 +248,46 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &262745081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262745075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfcf125d4a0f2f2458c06e7335524224, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitpoint: 0
+  maxHitpoint: 0
+  pushRecoverySpeed: 0.2
+  hpAmt: {fileID: 749175671}
+  ySpeed: 0.75
+  xSpeed: 1
+  IdleAnimation: 
+  AttackAnimation: 
+  WalkAnimation: 
+  AttackAnimationDuration: 0
+  triggerLength: 1
+  chaseLength: 5
+  filter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  weaponHitbox: {fileID: 0}
+  droppedItem: 
 --- !u!1 &274435187
 GameObject:
   m_ObjectHideFlags: 0
