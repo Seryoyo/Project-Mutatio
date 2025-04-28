@@ -14,9 +14,11 @@ public class Player : Mover
     Weapon weapon;
 
     // Animation state names
-    private const string MALT_WALK = "MaltWalk";
-    private const string MALT_IDLE = "MaltIdle";
-    private const string MALT_ATTACK = "MaltAttack";
+    private const string IDLE = "PlayerIdle";
+    private const string WALK = "PlayerWalk";
+    // private const string MALT_WALK = "MaltWalk";
+    // private const string MALT_IDLE = "MaltIdle";
+    // private const string MALT_ATTACK = "MaltAttack";
     private bool isAttacking = false;
     private float scanRadius = 3f; // npc detection
     public static Player instance;
@@ -42,10 +44,10 @@ public class Player : Mover
         animator = GetComponentInChildren<Animator>(); // Get the Animator component from the child PSB
         if (animator == null)
             Debug.LogWarning("Animator component not found in children!");
-        tiller = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "tiller").GetComponent<SpriteRenderer>();
+        /* tiller = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "tiller").GetComponent<SpriteRenderer>();
         spoon = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "spoon").GetComponent<SpriteRenderer>();
         weapon = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "weapon_bone").GetComponent<Weapon>();
-        EquipWeapon((Item.Equippable)GameManager.instance.inventoryMenu.GetItemFromName(GameManager.instance.currentWeapon)); // laugh up a storm why don't you
+        EquipWeapon((Item.Equippable)GameManager.instance.inventoryMenu.GetItemFromName(GameManager.instance.currentWeapon)); // laugh up a storm why don't you */
     }
 
 
@@ -63,17 +65,13 @@ public class Player : Mover
         bool isMoving = Mathf.Abs(moveDelta.x) > 0.1f || Mathf.Abs(moveDelta.y) > 0.1f;
 
         // Update animator w/ movement state
-        if (!isMoving && Input.GetKeyDown(KeyCode.E)) // Attack!!!
-        {
-            Attack();
-        }
-        else if (isMoving)
+        if (isMoving)
         { // Walk
-            animator.Play(MALT_WALK);
+            animator.Play(WALK);
         }
         else
         { // doin nothin
-            animator.Play(MALT_IDLE);
+            animator.Play(IDLE);
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -138,9 +136,10 @@ public class Player : Mover
         base.ReceiveDamage(dmg);
     }
 
+    /*
     private void Attack()
     {
-        animator.Play(MALT_ATTACK);
+        // animator.Play(MALT_ATTACK);
         isAttacking = true;
         StartCoroutine(ResetAttackState(0.6f)); // Make sure it only plays once
                                                 // This way seems kind of dumb so i feel like there's a better way
@@ -151,7 +150,7 @@ public class Player : Mover
         // Wait for the attack animation to finish
         yield return new WaitForSeconds(duration);
         isAttacking = false;
-    }
+    }*/
 
     protected override void UpdateHealthBar()
     {
