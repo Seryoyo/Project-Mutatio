@@ -24,7 +24,7 @@ public class Fighter : MonoBehaviour
         hpAmt = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "hpAmt").GetComponent<RectTransform>();
     }
 
-    protected virtual void ReceiveDamage(Damage dmg)
+    public virtual void ReceiveDamage(Damage dmg)
     {
         if (Time.time - lastImmune > immuneTime)
         {

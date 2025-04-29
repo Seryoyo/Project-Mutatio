@@ -131,7 +131,7 @@ public class Player : Mover
         weapon.pushForce = 4f;
     }
 
-    protected override void ReceiveDamage(Damage dmg)
+    public override void ReceiveDamage(Damage dmg)
     {
         base.ReceiveDamage(dmg);
     }

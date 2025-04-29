@@ -97,4 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4edc2ded220cb144a689b1ad422219b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageAmount: 1
+  pushForce: 1
   lifeTime: 0.5
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128

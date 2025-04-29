@@ -38,14 +38,25 @@ public class Shooter : MonoBehaviour
 
     void Shoot(float x, float y)
     {
-        GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation) as GameObject;
-        bullet.AddComponent<Rigidbody2D>().gravityScale = 0;
-        bullet.GetComponent<Rigidbody2D>().velocity = new Vector3(
+        GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
+        
+        // Set up physics
+        Rigidbody2D bulletRb = bullet.AddComponent<Rigidbody2D>();
+        bulletRb.gravityScale = 0;
+        bulletRb.velocity = new Vector2(
             (x < 0) ? Mathf.Floor(x) * bulletSpeed : Mathf.Ceil(x) * bulletSpeed, 
-            (y < 0) ? Mathf.Floor(y) * bulletSpeed : Mathf.Ceil(y) * bulletSpeed,
-            0
-         );
-
+            (y < 0) ? Mathf.Floor(y) * bulletSpeed : Mathf.Ceil(y) * bulletSpeed
+        );
+        
+        // Add bullet controller with damage values
+        BulletController bc = bullet.AddComponent<BulletController>();
+        bc.damageAmount = 1f; // Set your desired damage
+        bc.pushForce = 1f; // Set your desired knockback
+        
+        // Add collider (if not on prefab)
+        CircleCollider2D collider = bullet.AddComponent<CircleCollider2D>();
+        collider.isTrigger = true; // Make it a trigger
+        collider.radius = 0.1f; // Adjust size as needed
     }
 
 }

@@ -36,7 +36,7 @@ public class Weapon : Collidable
     }
 
     protected override void OnCollide(Collider2D coll) {
-        if (coll.tag == "Fighter") {
+        if (coll.tag == "Player") {
 
             // Check if the collider is on the same side (enemy/player), e.g. prevent enemies damaging each other or player damaging itself
             if (owner.gameObject.layer == coll.gameObject.layer)
