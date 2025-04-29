@@ -139,8 +139,7 @@ public class Player : PlayerMover
                 // Update sprite
                 SpriteRenderer red_eyes = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "red_eyes").GetComponent<SpriteRenderer>();
                 red_eyes.enabled = true;
-                // Update damage/shoot stuff
-                // tba!
+                GetComponent<Shooter>().bulletPrefab = Resources.Load<GameObject>("Prefabs/BulletButCooler");
                 return;
             default:
                 Debug.Log("ermmmmm... mutation not found...");
