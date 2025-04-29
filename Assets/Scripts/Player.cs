@@ -155,7 +155,6 @@ public class Player : PlayerMover
     public void HealMutation(float mutHealAmt)
     {
         mutationPoint = Mathf.Min(mutationPoint - mutHealAmt, 0);
-        UpdateMutationBar();
         Inventory.instance.UpdateMutationBar();
     }
 
@@ -185,32 +184,6 @@ public class Player : PlayerMover
     {
         return mutationPoint <= 0;
     }
-
-    protected void UpdateMutationBar() // Visible in inventory UI
-    {
-        /* if (mutationAmt != null)
-        {
-            float newLength = Mathf.Max((mutationPoint / maxMutationPoint) * .95f, 0f);
-            mutationAmt.localScale = new Vector3(newLength, mutationAmt.localScale.y, mutationAmt.localScale.z);
-        
-        }*/
-    }
-
-    /*
-    private void Attack()
-    {
-        // animator.Play(MALT_ATTACK);
-        isAttacking = true;
-        StartCoroutine(ResetAttackState(0.6f)); // Make sure it only plays once
-                                                // This way seems kind of dumb so i feel like there's a better way
-    }
-
-    private IEnumerator ResetAttackState(float duration)
-    {
-        // Wait for the attack animation to finish
-        yield return new WaitForSeconds(duration);
-        isAttacking = false;
-    }*/
 
     protected override void UpdateHealthBar()
     {

@@ -5,6 +5,7 @@ using UnityEngine;
 public class DoorPortal : Portal
 {
     bool isOpen;
+    public bool isSideDoor;
 
     protected override void Start()
     {
@@ -14,11 +15,17 @@ public class DoorPortal : Portal
 
     // Call from game manager when everyone is dead
     // TBA: Implement persistent chests/enemy death later
+
     public void EnableDoor()
     {
-        Debug.Log("Opening door");
-        GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/OpenDoors");
         isOpen = true;
+        GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>($"Sprites/OpenDoors{(isSideDoor ? "_Side" : "")}");
+    }
+
+    public void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (isOpen)
+            base.OnCollide(coll);
     }
 
     protected override void OnCollide(Collider2D coll)

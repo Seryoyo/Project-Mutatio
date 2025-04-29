@@ -61,7 +61,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 1102352415
   m_SortingOrder: 9
   m_TargetDisplay: 0
 --- !u!114 &4944357249405970134
@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 126632995536082847}
   - component: {fileID: 613461462797470347}
   - component: {fileID: 3674937859725197331}
-  - component: {fileID: 2625135451659809041}
+  - component: {fileID: 885930412002680354}
   m_Layer: 7
   m_Name: PuncherEnemy
   m_TagString: Fighter
@@ -261,9 +261,9 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  weaponHitbox: {fileID: 1498039509821677134}
+  weaponHitbox: {fileID: 5210993004555894305}
   droppedItem: Regeneration Tablet
---- !u!50 &2625135451659809041
+--- !u!50 &885930412002680354
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -483,6 +483,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6499082518134413585, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1498039509821677134}
+    - targetCorrespondingSourceObject: {fileID: 6499082518134413585, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4172595434073984826}
+    - targetCorrespondingSourceObject: {fileID: 6499082518134413585, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5210993004555894305}
   m_SourcePrefab: {fileID: 100100000, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
 --- !u!1 &3561860516788328274 stripped
 GameObject:
@@ -519,6 +525,80 @@ MonoBehaviour:
   damagePoint: 3
   pushForce: 8
 --- !u!61 &1498039509821677134
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3561860516788328274}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.20200151, y: 0.000000059604645}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.04, y: 1.55}
+    newSize: {x: 1.04, y: 1.55}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.4381434, y: 1.5500001}
+  m_EdgeRadius: 0
+--- !u!114 &4172595434073984826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3561860516788328274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebe0d1358b0e9c94ca227ee8fd25a317, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filter:
+    useTriggers: 0
+    useLayerMask: 0
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 0
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  owner: {fileID: 3674937859725197331}
+  damagePoint: 3
+  pushForce: 8
+--- !u!61 &5210993004555894305
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

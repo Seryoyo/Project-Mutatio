@@ -26,7 +26,6 @@ public class PortalManager : MonoBehaviour
 
     public void DecrementEnemyCount()
     {
-        Debug.Log("Decrementing enemy count");
         --enemyCount;
         if (enemyCount == 0)
             OpenPortals();
@@ -42,17 +41,12 @@ public class PortalManager : MonoBehaviour
     {
         Enemy[] enemies = FindObjectsOfType<Enemy>().Where(e => e.hitpoint > 0).ToArray();
         portals = FindObjectsOfType<DoorPortal>();
-        Debug.Log("Enemies is null? - " + (enemies == null));
-        Debug.Log("Portals is null? - " + (portals == null));
-        if (enemies != null)
-        {
-            Debug.Log("Live enemies found: " + enemies.Length);
-            Debug.Log("Door portals found: " + portals.Length);
-            enemyCount = enemies.Length;
+        Debug.Log("Live enemies found: " + enemies.Length);
+        Debug.Log("Door portals found: " + portals.Length);
+        enemyCount = enemies.Length;
 
-            if (enemies.Length == 0)
-                OpenPortals();
-        }
+        if (enemies.Length == 0)
+            OpenPortals();
     }
 
 }
