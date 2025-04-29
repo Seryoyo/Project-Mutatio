@@ -12,7 +12,7 @@ public class CameraMotor : MonoBehaviour
 
     private void Start()
     {
-        lookAt = GameManager.instance.player.transform;
+        lookAt = Player.instance.transform;
     }
 
     // Late update so we can move camera after player moves w/ FixedUpdate

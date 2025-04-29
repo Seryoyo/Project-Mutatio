@@ -32,13 +32,13 @@ public class GameManager : MonoBehaviour
         // game start state
         instance = this;
         DontDestroyOnLoad(gameObject);
-        currentWeapon = "Tiller"; // Make "" to start w/ nothing. Using stronger weapon for debugging
+        //currentWeapon = "Tiller"; // Make "" to start w/ nothing. Using stronger weapon for debugging
         inventory = new Dictionary<string, int>()
         {
-            ["Spoon"] = 0,
-            ["Tiller"] = 0,
-            ["Dandelion Weed"] = 0,
-            ["Horseradish Root"] = 0,
+            ["Band-Aid"] = 1,
+            ["Regeneration Tablet"] = 0,
+            ["Psy-Delimiter"] = 1,
+            ["Neural Stabilizer"] = 1,
             ["Milk"] = 0,
             ["Coffee"] = 0,
         };
@@ -63,24 +63,28 @@ public class GameManager : MonoBehaviour
 
     public void GrantItem(string name, int quantity)
     {
-        inventory[name] += quantity;
-        floatingTextManager.Show($"Obtained {quantity } {name}{((quantity>1)?"s":"")}!",
-                                    30, UnityEngine.Color.green, 
-                                    player.transform.position,
-                                    new Vector3 (0, 50f, 0),
-                                    2f);
-        inventoryMenu.UpdateInventory();
+        if (quantity != 0) { 
+            inventory[name] += quantity;
+            floatingTextManager.Show($"Obtained {quantity } {name}{((quantity>1)?"s":"")}!",
+                                        30, UnityEngine.Color.green, 
+                                        player.transform.position,
+                                        new Vector3 (0, 50f, 0),
+                                        2f);
+            inventoryMenu.UpdateInventory();
+        }
     }
 
     public void TakeItem(string name, int quantity, bool used = false)
     {
-        inventory[name] -= quantity;
-        floatingTextManager.Show($"{(used ? "Used" : "Lost")} {quantity} {name}{((quantity > 1) ? "s" : "")}.\n\n",
-                                    30,
-                                    UnityEngine.Color.yellow,
-                                    player.transform.position,
-                                    new Vector3(0, 50f, 0), 2f);
-        inventoryMenu.UpdateInventory();
+        if (quantity != 0) { 
+            inventory[name] -= quantity;
+            floatingTextManager.Show($"{(used ? "Used" : "Lost")} {quantity} {name}{((quantity > 1) ? "s" : "")}.\n\n",
+                                        30,
+                                        UnityEngine.Color.yellow,
+                                        player.transform.position,
+                                        new Vector3(0, 50f, 0), 2f);
+            inventoryMenu.UpdateInventory();
+        }
     }
 
 }

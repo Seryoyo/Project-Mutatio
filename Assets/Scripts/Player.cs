@@ -16,12 +16,12 @@ public class Player : PlayerMover
     // Animation state names
     private const string IDLE = "PlayerIdle";
     private const string WALK = "PlayerWalk";
-    // private const string MALT_WALK = "MaltWalk";
-    // private const string MALT_IDLE = "MaltIdle";
-    // private const string MALT_ATTACK = "MaltAttack";
     private bool isAttacking = false;
     private float scanRadius = 3f; // npc detection
     public static Player instance;
+
+    public float mutationPoint;
+    public float maxMutationPoint;
 
 
     private void Awake()
@@ -33,17 +33,21 @@ public class Player : PlayerMover
         }
         instance = this;
         hitpoint = maxHitpoint; // start w/ full hp
+        mutationPoint = 0;
         DontDestroyOnLoad(gameObject);
     }
 
     private new void Start()
     {
         base.Start();
-        GameManager.instance.player = this;
+        Player.instance = this;
         UpdateHealthBar();
         animator = GetComponentInChildren<Animator>(); // Get the Animator component from the child PSB
         if (animator == null)
             Debug.LogWarning("Animator component not found in children!");
+        Inventory.instance.UpdateHealthBar();
+        Inventory.instance.UpdateMutationBar();
+
         /* tiller = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "tiller").GetComponent<SpriteRenderer>();
         spoon = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "spoon").GetComponent<SpriteRenderer>();
         weapon = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "weapon_bone").GetComponent<Weapon>();
@@ -114,11 +118,8 @@ public class Player : PlayerMover
                     break;
             }
         } else // Default, no-weapon value
-        {   
-            weapon.damagePoint = 1;
-            weapon.pushForce = 4f;
-            tiller.enabled = false;
-            spoon.enabled = false;
+        {
+            UnequipWeapon();
         }
     }
 
@@ -131,9 +132,69 @@ public class Player : PlayerMover
         weapon.pushForce = 4f;
     }
 
+    public void ActivateMutation(string mutationName)
+    {
+        switch (mutationName.ToLower()) {
+            case ("psy-delimiter"):
+                // Update sprite
+                SpriteRenderer red_eyes = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "red_eyes").GetComponent<SpriteRenderer>();
+                red_eyes.enabled = true;
+                // Update damage/shoot stuff
+                // tba!
+                return;
+            default:
+                Debug.Log("ermmmmm... mutation not found...");
+                return;
+        } 
+    }
+
+    public void AddMutationPoints(float mutPt)
+    {
+        mutationPoint += mutPt;
+    }
+
+    public void HealMutation(float mutHealAmt)
+    {
+        mutationPoint = Mathf.Min(mutationPoint - mutHealAmt, 0);
+        UpdateMutationBar();
+        Inventory.instance.UpdateMutationBar();
+    }
+
     public override void ReceiveDamage(Damage dmg)
     {
         base.ReceiveDamage(dmg);
+        Inventory.instance.UpdateHealthBar();
+    }
+
+    public override void Heal(float healAmt)
+    {
+        base.Heal(healAmt);
+        Inventory.instance.UpdateHealthBar();
+    }
+
+    public bool HasFullHealth()
+    {
+        return hitpoint >= maxHitpoint;
+    }
+    
+    public bool CanMutate(float addtlPt)
+    {
+        return (addtlPt + mutationPoint) <= maxMutationPoint;
+    }
+
+    public bool HasNoMutationPoints()
+    {
+        return mutationPoint <= 0;
+    }
+
+    protected void UpdateMutationBar() // Visible in inventory UI
+    {
+        /* if (mutationAmt != null)
+        {
+            float newLength = Mathf.Max((mutationPoint / maxMutationPoint) * .95f, 0f);
+            mutationAmt.localScale = new Vector3(newLength, mutationAmt.localScale.y, mutationAmt.localScale.z);
+        
+        }*/
     }
 
     /*

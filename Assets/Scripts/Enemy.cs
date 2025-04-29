@@ -31,7 +31,7 @@ public class Enemy : Mover
     {
         base.Start(); // Get usual boxcollider
         animator = GetComponentInChildren<Animator>(); // Get the Animator component from the child PSB
-        playerTransform = GameManager.instance.player.transform;
+        playerTransform = Player.instance.transform;
         startingPosition = transform.position;
     }
 
@@ -40,7 +40,7 @@ public class Enemy : Mover
         // Check if player is in range
         if (playerTransform == null)
         {
-            playerTransform = GameManager.instance.player.transform;
+            playerTransform = Player.instance.transform;
         }
         else
         {

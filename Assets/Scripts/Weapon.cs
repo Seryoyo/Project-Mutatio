@@ -11,8 +11,8 @@ public class Weapon : Collidable
     // private SpriteRenderer spriteRenderer;
 
     // Swing
-    private float cooldown = 0.5f;
-    private float lastSwing;
+    // private float cooldown = 0.5f;
+    // private float lastSwing;
 
 
     protected override void Start()
@@ -25,19 +25,18 @@ public class Weapon : Collidable
     {
         base.Update();
 
-        if (Input.GetKeyDown(KeyCode.E))
+        /*if (Input.GetKeyDown(KeyCode.E))
         {
             if (Time.time - lastSwing > cooldown)
             {
                 lastSwing = Time.time;
                 Swing();
             }
-        }
+        }*/
     }
 
     protected override void OnCollide(Collider2D coll) {
-        if (coll.tag == "Player") {
-
+        if (coll.tag == "Fighter") {
             // Check if the collider is on the same side (enemy/player), e.g. prevent enemies damaging each other or player damaging itself
             if (owner.gameObject.layer == coll.gameObject.layer)
                 return;
@@ -54,7 +53,7 @@ public class Weapon : Collidable
         
     }
 
-    private void Swing() {
-    }
+    /*private void Swing() {
+    }*/
 
 }

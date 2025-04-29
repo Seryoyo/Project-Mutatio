@@ -17,6 +17,8 @@ public class Inventory : MonoBehaviour
     public TextMeshProUGUI ItemDescription;
     public Button UseItemButton;
     public TextMeshProUGUI UseItemButtonText;
+    public RectTransform mutationAmt;
+    public RectTransform hpAmt;
 
     private void Awake()
     {
@@ -37,7 +39,7 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         GameManager.instance.inventoryMenu = this;
-        UpdateItemDetails();
+        UpdateInventory();
     }
 
     // Update is called once per frame
@@ -69,11 +71,9 @@ public class Inventory : MonoBehaviour
         {
             if (kv.Value > 0)
             {
-                Debug.Log("Trying to map item name to IItem object");
                 IItem entry = GetItemFromName(kv.Key);
                 if (entry != null)
                 {
-                    Debug.Log("Entry name: " + entry.itemID);
                     slots[slotsIndex].item = entry;
                     slots[slotsIndex].UpdateInfo();
                     slotsIndex++;
@@ -97,7 +97,7 @@ public class Inventory : MonoBehaviour
     public void OnUseButtonClicked()
     {
         selectedItem.UseItem();
-        if (selectedItem.GetType() == typeof(Consumable)) {
+        if (selectedItem.GetType() == typeof(Consumable)) { // used up item
             UpdateInventory();
         }
     }
@@ -139,6 +139,23 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void UpdateHealthBar()
+    {
+        if (hpAmt != null)
+        {
+            float newLength = Mathf.Max((Player.instance.hitpoint / Player.instance.maxHitpoint) * .98f, 0f);
+            hpAmt.localScale = new Vector3(newLength, hpAmt.localScale.y, hpAmt.localScale.z);
+        }
+    }
+
+    public void UpdateMutationBar()
+    {
+        if (mutationAmt == null)
+            return;
+        float newLength = Mathf.Max((Player.instance.mutationPoint / Player.instance.maxMutationPoint) * .98f, 0f);
+        mutationAmt.localScale = new Vector3(newLength, mutationAmt.localScale.y, mutationAmt.localScale.z);
+    }
+
     // Get item from name
     public IItem GetItemFromName(string name)
     {
@@ -148,18 +165,34 @@ public class Inventory : MonoBehaviour
             {
                 switch (kvPair.Key.ToLower()) // should probably get a proper DB construct
                 {
-                    case ("spoon"):
-                        return new Equippable("Spoon", "Ladle of Justice", "Perfect for stirring pasta sauce and whacking evildoers. <color=green><b>(2 ATK, +Push)</b></color>", (Category)3, 2, 8f);
-                    case ("tiller"):
-                        return new Equippable("Tiller", "Dragonslayer Trident", "Legend has it, it really hurts to be hit with one of these. <color=green><b>(4 ATK, ++Push)</b></color>", (Category)3, 4, 12f);
-                    case ("dandelion weed"):
-                        return new Item("Dandelion Weed", "Dandelion Weed", "Some say that if you gather enough, you can make a wish ... Or something.", (Category)1);
-                    case ("horseradish root"):
-                        return new Item("Horseradish Root", "Horseradish Root", "Sharp and robust, like the hoof of a raging beast.", (Category)1);
-                    case ("milk"):
-                        return new HealingItem("Milk", "Bovine Blessing", "Lactose-free. <color=green><b>(100% HEAL)</b></color>", (Category)2, GameManager.instance.player.maxHitpoint);
-                    case ("coffee"):
-                        return new Item("Coffee", "Energizing Elixir", "Mom says I'm not allowed to drink this.", (Category)1);
+                    case ("band-aid"):
+                        return new HealingItem(
+                            name: "Band-Aid",
+                            title: "Band-Aid",
+                            desc: "A standard-issue adhesive bandage. <color=green><b>(15% HEAL)</b></color>",
+                            category: (Category)2,
+                            healAmt: Player.instance.maxHitpoint * .15f);
+                    case ("regeneration tablet"):
+                        return new HealingItem(
+                            name: "Regeneration Tablet",
+                            title: "Regeneration Tablet",
+                            desc: "An experimental compound that rapidly rebuilds cellular structure. <color=green><b>(FULL HEAL)</b></color>",
+                            category: (Category)2,
+                            healAmt: Player.instance.maxHitpoint);
+                    case ("neural stabilizer"):
+                        return new MutationHealingItem(
+                            name: "Neural Stabilizer",
+                            title: "Neural Stabilizer",
+                            desc: "Mitigates mutation-induced neural degradation. <color=green><b>(-MUT)</b></color>",
+                            category: (Category)2,
+                            mutateHealAmt: 2f);
+                    case ("psy-delimiter"):
+                        return new MutatorItem(
+                            name: "Psy-Delimiter",
+                            title: "Psy-Delimiter",
+                            desc: "Delimits ur psy or something",
+                            category: (Category)2,
+                            mutateAmt: 3f);
                     default: break;
 
                 }

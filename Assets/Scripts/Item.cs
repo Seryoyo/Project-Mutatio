@@ -61,11 +61,11 @@ public class Item : IItem
             // Update player, game manager, change stats
             if (this.itemID.ToLower().Equals(GameManager.instance.currentWeapon)) // we unequip
             {
-                GameManager.instance.player.UnequipWeapon();
+                Player.instance.UnequipWeapon();
                 // TODO: update weapon sprite in inventory menu
             } else
             {
-                GameManager.instance.player.EquipWeapon(this);
+                Player.instance.EquipWeapon(this);
                 // TODO: update weapon sprite in inventory menu
             }
         }
@@ -79,11 +79,11 @@ public class Item : IItem
 
         public override void UseItem()
         {
-            ActivateEffect();
-            GameManager.instance.TakeItem(this.itemID, 1, true);
+            if (ActivateEffect())
+                GameManager.instance.TakeItem(this.itemID, 1, true);
             
         }
-        public virtual void ActivateEffect() {}
+        public virtual bool ActivateEffect() { return false; }
     }
 
     public class HealingItem : Consumable
@@ -95,9 +95,54 @@ public class Item : IItem
             this.healAmt = healAmt;
         }
 
-        public override void ActivateEffect()
+        public override bool ActivateEffect()
         {
-            GameManager.instance.player.Heal(healAmt);
+            if (Player.instance.HasFullHealth())
+                return false;
+            Player.instance.Heal(healAmt);
+            return true;
+        }
+    }
+
+    public class MutatorItem : Consumable
+    {
+        public float mutateAmt; // How much to add to mutation bar
+
+        public MutatorItem(string name, string title, string desc, Category category, float mutateAmt, string spriteID = null)
+            : base(name, title, desc, category, spriteID = null)
+        {
+            this.mutateAmt = mutateAmt;
+        }
+
+        public override bool ActivateEffect()
+        {
+            if (!Player.instance.CanMutate(mutateAmt))
+                return false;
+            Debug.Log(itemID);
+            Player.instance.ActivateMutation(itemID);
+            Player.instance.AddMutationPoints(mutateAmt);
+            Inventory.instance.UpdateMutationBar();
+            return true;
+        }
+    }
+
+    // Reduce mutation side effect... meter... thing
+    public class MutationHealingItem : Consumable
+    {
+        public float mutateHealAmt; // How much of mutation meter to reduce
+
+        public MutationHealingItem(string name, string title, string desc, Category category, float mutateHealAmt, string spriteID = null)
+            : base(name, title, desc, category, spriteID = null)
+        {
+            this.mutateHealAmt = mutateHealAmt;
+        }
+
+        public override bool ActivateEffect()
+        {
+            if (Player.instance.HasNoMutationPoints()) // nothing to heal 
+                return false;
+            Player.instance.HealMutation(mutateHealAmt);
+            return true;
         }
     }
 

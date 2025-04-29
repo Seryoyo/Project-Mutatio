@@ -54,7 +54,6 @@ public class Fighter : MonoBehaviour
         {
             float newLength = Mathf.Max((hitpoint / maxHitpoint) * .95f, 0f);
             hpAmt.localScale = new Vector3(newLength, hpAmt.localScale.y, hpAmt.localScale.z);
-
         }
     }
 

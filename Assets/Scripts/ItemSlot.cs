@@ -38,7 +38,6 @@ public class ItemSlot : MonoBehaviour
 
     public void ChangeIcon()
     {
-        Debug.Log("Sprites/"+item.itemID);
         icon.sprite = Resources.Load<Sprite>("Sprites/" + item.itemID);
         enabled = true;
         icon.enabled = true;
@@ -63,7 +62,6 @@ public class ItemSlot : MonoBehaviour
 
     public void OnSlotClicked()
     {
-        Debug.Log("Running ItemSlot.OnSlotClicked");
         Inventory.instance.SelectItem(item);
     }
 
