@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class Portal : Collidable
 {
     public string destinationScene;
-    public GameManager instance;
     public Vector3 spawnPoint;
     public bool flipSprite;
 

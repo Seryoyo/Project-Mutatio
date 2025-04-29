@@ -114,11 +114,10 @@ public class Enemy : Mover
 
     protected override void Death()
     {
+        PortalManager.instance.DecrementEnemyCount();
+        // tba... change to list of possible drops... add RNG...
         if (droppedItem != null && droppedItem.Length >= 1)
-        {
             GameManager.instance.GrantItem(droppedItem, 1);
-        }
-        // And show text for it
         Destroy(gameObject);
     }
 

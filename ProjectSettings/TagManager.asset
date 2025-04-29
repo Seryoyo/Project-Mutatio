@@ -7,6 +7,7 @@ TagManager:
   - Fighter
   - InventorySlot
   - Damager
+  - DoorPortal
   layers:
   - Default
   - TransparentFX
@@ -44,9 +45,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Portal
+    uniqueID: 2479732061
+    locked: 0
   - name: Enemy
     uniqueID: 1102352415
     locked: 0
   - name: Player
     uniqueID: 4290925703
+    locked: 0
+  - name: FrontDeco
+    uniqueID: 138773643
     locked: 0
