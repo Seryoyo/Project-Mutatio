@@ -6,7 +6,7 @@ using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Player : Mover
+public class Player : PlayerMover
 {
     private Animator animator;
     SpriteRenderer tiller;
