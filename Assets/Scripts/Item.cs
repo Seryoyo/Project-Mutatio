@@ -81,6 +81,7 @@ public class Item : IItem
         {
             if (ActivateEffect())
                 GameManager.instance.TakeItem(this.itemID, 1, true);
+            Inventory.instance.UpdateInventory();
             
         }
         public virtual bool ActivateEffect() { return false; }
