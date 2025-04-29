@@ -21,7 +21,6 @@ public class BulletController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        // Check if we hit an object on the enemy layer
         if (((1 << collision.gameObject.layer) & enemyLayer) != 0)
         {
             Fighter enemy = collision.GetComponent<Fighter>();
@@ -37,7 +36,6 @@ public class BulletController : MonoBehaviour
             }
         }
         
-        // Optional: Destroy bullet when hitting walls (layer not Player or Actor)
         if (collision.gameObject.layer != LayerMask.NameToLayer("Player") && 
             ((1 << collision.gameObject.layer) & enemyLayer) == 0)
         {
