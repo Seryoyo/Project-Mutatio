@@ -7,9 +7,8 @@ public class DoorPortal : Portal
     bool isOpen;
     public bool isSideDoor;
 
-    protected override void Start()
+    private void Awake()
     {
-        base.Start();
         isOpen = false;
     }
 

@@ -20,8 +20,13 @@ public class Player : PlayerMover
     private float scanRadius = 3f; // npc detection
     public static Player instance;
 
+    // Mutations and stat upgrades
     public float mutationPoint;
     public float maxMutationPoint;
+    
+    // public int bulletLevel;
+    // public int speedLevel;
+    // what other upgrades... idk
 
 
     private void Awake()
@@ -40,21 +45,12 @@ public class Player : PlayerMover
     private new void Start()
     {
         base.Start();
-        Player.instance = this;
+        instance = this;
         UpdateHealthBar();
-        animator = GetComponentInChildren<Animator>(); // Get the Animator component from the child PSB
-        if (animator == null)
-            Debug.LogWarning("Animator component not found in children!");
+        animator = GetComponentInChildren<Animator>();
         Inventory.instance.UpdateHealthBar();
         Inventory.instance.UpdateMutationBar();
-
-        /* tiller = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "tiller").GetComponent<SpriteRenderer>();
-        spoon = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "spoon").GetComponent<SpriteRenderer>();
-        weapon = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "weapon_bone").GetComponent<Weapon>();
-        EquipWeapon((Item.Equippable)GameManager.instance.inventoryMenu.GetItemFromName(GameManager.instance.currentWeapon)); // laugh up a storm why don't you */
     }
-
-
 
     private void FixedUpdate()
     {
@@ -70,13 +66,9 @@ public class Player : PlayerMover
 
         // Update animator w/ movement state
         if (isMoving)
-        { // Walk
             animator.Play(WALK);
-        }
         else
-        { // doin nothin
             animator.Play(IDLE);
-        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -98,42 +90,9 @@ public class Player : PlayerMover
 
     }
 
-    public void EquipWeapon(Item.Equippable newWeapon = null)
-    {
-        if (newWeapon != null) { 
-            GameManager.instance.currentWeapon = newWeapon.itemID;
-            weapon.damagePoint = newWeapon.dmg;
-            weapon.pushForce = newWeapon.pushForce;
-            switch (GameManager.instance.currentWeapon.ToLower())
-            {
-                case ("tiller"):
-                    tiller.enabled = true;
-                    spoon.enabled = false;
-                    break;
-                case ("spoon"):
-                    tiller.enabled = false;
-                    spoon.enabled = true;
-                    break;
-                default:
-                    break;
-            }
-        } else // Default, no-weapon value
-        {
-            UnequipWeapon();
-        }
-    }
-
-    public void UnequipWeapon()
-    {
-        GameManager.instance.currentWeapon = "";
-        tiller.enabled = false;
-        spoon.enabled = false;
-        weapon.damagePoint = 1;
-        weapon.pushForce = 4f;
-    }
-
     public void ActivateMutation(string mutationName)
     {
+        // tba... change to work with mutation levels
         switch (mutationName.ToLower()) {
             case ("psy-delimiter"):
                 // Update sprite
@@ -147,8 +106,7 @@ public class Player : PlayerMover
         } 
     }
 
-    public void AddMutationPoints(float mutPt)
-    {
+    public void AddMutationPoints(float mutPt) {
         mutationPoint += mutPt;
     }
 
@@ -170,32 +128,15 @@ public class Player : PlayerMover
         Inventory.instance.UpdateHealthBar();
     }
 
-    public bool HasFullHealth()
-    {
-        return hitpoint >= maxHitpoint;
-    }
-    
-    public bool CanMutate(float addtlPt)
-    {
-        return (addtlPt + mutationPoint) <= maxMutationPoint;
-    }
-
-    public bool HasNoMutationPoints()
-    {
-        return mutationPoint <= 0;
-    }
-
-    protected override void UpdateHealthBar()
-    {
-        base.UpdateHealthBar();
-        // TODO: Update in inventory UI as well?
-    }
+    public bool HasFullHealth() => (hitpoint >= maxHitpoint);
+    public bool CanMutate(float addtlPt) => ((addtlPt + mutationPoint) <= maxMutationPoint);
+    public bool HasNoMutationPoints() => (mutationPoint <= 0);
+    protected override void UpdateHealthBar() => base.UpdateHealthBar();
 
     protected override void Death()
     {
         // this is broken
         // change to gameover scene
-
 
         // Heal(maxHitpoint);
         // SceneManager.LoadScene("House");

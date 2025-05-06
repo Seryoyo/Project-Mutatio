@@ -22,7 +22,13 @@ public class PortalManager : MonoBehaviour
         OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
-    
+
+    private void Start()
+    {
+        if (enemyCount == 0)
+            OpenPortals();
+    }
+
 
     public void DecrementEnemyCount()
     {
@@ -41,12 +47,9 @@ public class PortalManager : MonoBehaviour
     {
         Enemy[] enemies = FindObjectsOfType<Enemy>().Where(e => e.hitpoint > 0).ToArray();
         portals = FindObjectsOfType<DoorPortal>();
-        Debug.Log("Live enemies found: " + enemies.Length);
-        Debug.Log("Door portals found: " + portals.Length);
         enemyCount = enemies.Length;
-
-        if (enemies.Length == 0)
-            OpenPortals();
+        Debug.Log("Live enemies found: " + enemyCount);
+        Debug.Log("Door portals found: " + portals.Length);
     }
 
 }

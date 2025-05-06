@@ -58,6 +58,7 @@ public class Item : IItem
         // Equip weapon.
         public override void UseItem()
         {
+            /*
             // Update player, game manager, change stats
             if (this.itemID.ToLower().Equals(GameManager.instance.currentWeapon)) // we unequip
             {
@@ -67,7 +68,7 @@ public class Item : IItem
             {
                 Player.instance.EquipWeapon(this);
                 // TODO: update weapon sprite in inventory menu
-            }
+            }*/
         }
     }
 
