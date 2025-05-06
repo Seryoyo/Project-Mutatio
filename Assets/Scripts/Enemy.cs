@@ -6,6 +6,7 @@ using UnityEngine;
 public class Enemy : Mover
 {
     private Animator animator;
+    private TriggerManager triggerManager;
     public string IdleAnimation;
     public string AttackAnimation;
     public string WalkAnimation;
@@ -22,7 +23,7 @@ public class Enemy : Mover
 
     // Hitbox
     public BoxCollider2D weaponHitbox; // Weapon hitbox
-    private Collider2D[] hits = new Collider2D[10];
+    // private Collider2D[] hits = new Collider2D[10];
 
     public string droppedItem = null;
 
@@ -31,6 +32,7 @@ public class Enemy : Mover
     {
         base.Start(); // Get usual boxcollider
         animator = GetComponentInChildren<Animator>(); // Get the Animator component from the child PSB
+        triggerManager = GetComponentInChildren<TriggerManager>(); // Get the Animator component from the child PSB
         playerTransform = Player.instance.transform;
         startingPosition = transform.position;
     }
@@ -49,20 +51,17 @@ public class Enemy : Mover
                 chasing = Vector3.Distance(playerTransform.position, startingPosition) < triggerLength;
                 if (chasing)
                 {
-                    if (!collidingWithPlayer)
+                    if (!collidingWithPlayer && !animator.GetBool("attacking"))
                     {
-                        if (animator != null && WalkAnimation != null) { animator.Play(WalkAnimation); }
-                        ;
+                        if (animator != null && WalkAnimation != null) {
+                            animator.Play(WalkAnimation);
+                        };
                         UpdateMotor((playerTransform.position - transform.position).normalized);
                     }
                     else // colliding w/ player
                     {
                         if (animator != null && AttackAnimation != null)
-                        {
-                            animator.Play(AttackAnimation);
-                            StartCoroutine(ResetAttackState(AttackAnimationDuration)); // Make sure it only plays once
-                        }
-
+                            triggerManager.SetAnimTrigger("attacking");
                     }
                 }
                 else if (animator != null && IdleAnimation != null)
@@ -71,7 +70,7 @@ public class Enemy : Mover
                 }
 
                 collidingWithPlayer = false;
-                boxCollider.OverlapCollider(filter, hits);
+                /*boxCollider.OverlapCollider(filter, hits);
                 for (int i = 0; i < hits.Length; i++)
                 {
                     if (hits[i] == null)
@@ -79,7 +78,7 @@ public class Enemy : Mover
                     if (hits[i].name == "Player")
                         collidingWithPlayer = true;
                     hits[i] = null;
-                }
+                }*/
 
                 if (weaponHitbox != null)
                 {

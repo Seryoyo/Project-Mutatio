@@ -9,9 +9,6 @@ using UnityEngine.SceneManagement;
 public class Player : PlayerMover
 {
     private Animator animator;
-    SpriteRenderer tiller;
-    SpriteRenderer spoon;
-    Weapon weapon;
 
     // Animation state names
     private const string IDLE = "PlayerIdle";
@@ -27,6 +24,7 @@ public class Player : PlayerMover
     // public int bulletLevel;
     // public int speedLevel;
     // what other upgrades... idk
+    // oh yeah :-) max hp! increase...
 
 
     private void Awake()

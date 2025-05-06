@@ -48,8 +48,6 @@ public class PortalManager : MonoBehaviour
         Enemy[] enemies = FindObjectsOfType<Enemy>().Where(e => e.hitpoint > 0).ToArray();
         portals = FindObjectsOfType<DoorPortal>();
         enemyCount = enemies.Length;
-        Debug.Log("Live enemies found: " + enemyCount);
-        Debug.Log("Door portals found: " + portals.Length);
     }
 
 }

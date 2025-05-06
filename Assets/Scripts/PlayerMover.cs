@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public abstract class PlayerMover : PlayerFighter
@@ -30,6 +31,7 @@ public abstract class PlayerMover : PlayerFighter
 
         move = new Vector2(0, moveDelta.y) * Time.deltaTime;
         int count = boxCollider.Cast(move.normalized, hits, move.magnitude);
+
         if (count == 0)
             transform.Translate(0, moveDelta.y * Time.deltaTime, 0);
 
@@ -38,6 +40,7 @@ public abstract class PlayerMover : PlayerFighter
         if (count == 0)
             transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
     }
+
 
 
 

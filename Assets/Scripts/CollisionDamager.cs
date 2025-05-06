@@ -6,7 +6,7 @@ using UnityEngine;
 public class SpikeTrap : MonoBehaviour
 {
 
-    public float damagePoint = 1.0f;
+    public float collisionDamage = 1.0f;
 
     public void OnTriggerStay2D(Collider2D coll)
     {
@@ -15,7 +15,7 @@ public class SpikeTrap : MonoBehaviour
 
        Damage dmg =  new Damage()
                         {
-                            damageAmount = damagePoint,
+                            damageAmount = collisionDamage,
                             origin = Vector3.zero,
                             pushForce = 0
                         };
