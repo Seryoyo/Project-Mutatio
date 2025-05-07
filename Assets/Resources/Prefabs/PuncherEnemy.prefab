@@ -375,7 +375,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 109973973781426798, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
       propertyPath: m_SortingLayer
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 109973973781426798, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
       propertyPath: m_SortingLayerID
@@ -383,7 +383,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1242525311080715454, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
       propertyPath: m_SortingLayer
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1242525311080715454, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
       propertyPath: m_SortingLayerID
@@ -391,7 +391,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2622330660082571944, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
       propertyPath: m_SortingLayer
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2622330660082571944, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
       propertyPath: m_SortingLayerID
@@ -439,7 +439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2788108641756502103, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
       propertyPath: m_SortingLayer
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2788108641756502103, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
       propertyPath: m_SortingLayerID
@@ -447,7 +447,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2883817672885567699, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
       propertyPath: m_SortingLayer
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2883817672885567699, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
       propertyPath: m_SortingLayerID
@@ -459,7 +459,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4632483703446484640, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
       propertyPath: m_SortingLayer
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4632483703446484640, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
       propertyPath: m_SortingLayerID
@@ -467,7 +467,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5564276025315278312, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
       propertyPath: m_SortingLayer
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5564276025315278312, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
       propertyPath: m_SortingLayerID
@@ -477,6 +477,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3879133043670825436, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2881472251704718404}
     - targetCorrespondingSourceObject: {fileID: 6499082518134413585, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1338521883844583545}
@@ -648,3 +651,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2674411572011590079, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
   m_PrefabInstance: {fileID: 7736942651159744067}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6812352674521462687 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3879133043670825436, guid: 0ea98be89eb2ede458e8352adc10af72, type: 3}
+  m_PrefabInstance: {fileID: 7736942651159744067}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2881472251704718404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6812352674521462687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 774fedbc3fec4f84faeb9b80c7606d21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

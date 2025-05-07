@@ -122,23 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &59736050 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6812352674521462687, guid: 42d57ff06b7d529488c41bf839bb87cd, type: 3}
-  m_PrefabInstance: {fileID: 3934697895359109499}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &59736053
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 59736050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 774fedbc3fec4f84faeb9b80c7606d21, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &113506196 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6173520138101278912, guid: 1f1b70b830025e74ab794fcb24e68697, type: 3}
@@ -11603,18 +11586,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1024692217279536557, guid: 42d57ff06b7d529488c41bf839bb87cd, type: 3}
-      propertyPath: m_Color.b
-      value: 0.1198743
-      objectReference: {fileID: 0}
-    - target: {fileID: 1024692217279536557, guid: 42d57ff06b7d529488c41bf839bb87cd, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1024692217279536557, guid: 42d57ff06b7d529488c41bf839bb87cd, type: 3}
-      propertyPath: m_Color.r
-      value: 0.8490566
-      objectReference: {fileID: 0}
     - target: {fileID: 7441805302792825225, guid: 42d57ff06b7d529488c41bf839bb87cd, type: 3}
       propertyPath: m_Name
       value: PuncherEnemy
@@ -11622,10 +11593,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6812352674521462687, guid: 42d57ff06b7d529488c41bf839bb87cd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 59736053}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 42d57ff06b7d529488c41bf839bb87cd, type: 3}
 --- !u!1001 &4058999619063880651
 PrefabInstance:
