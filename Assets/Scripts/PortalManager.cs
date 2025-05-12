@@ -18,7 +18,6 @@ public class PortalManager : MonoBehaviour
             return;
         }
         instance = this;
-        DontDestroyOnLoad(gameObject);
         OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }

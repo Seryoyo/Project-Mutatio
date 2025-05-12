@@ -139,5 +139,11 @@ public class Player : PlayerMover
         // Heal(maxHitpoint);
         // SceneManager.LoadScene("House");
         // transform.position = new Vector3(5.5f, -1.3f, 0);
+    Destroy(GameManager.instance.gameObject);
+    Destroy(Inventory.instance.gameObject);
+    Destroy(Player.instance.gameObject);
+
+    SceneManager.LoadScene("DEATH");
     }
+    
 }
