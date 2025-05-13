@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Game.unity
     guid: 4acf21b62f3536140986f9864fbfa9ce
   - enabled: 1
+    path: Assets/Scenes/MiniBossRoom.unity
+    guid: d828900777a9e49498dccd8dc2b444ce
+  - enabled: 1
+    path: Assets/Scenes/BossRoom.unity
+    guid: e41a2a6ad5f4447018e9a64b99973044
+  - enabled: 1
     path: Assets/Scenes/Death.unity
     guid: b5b5f19a6cfabee49b25412b4b3598d9
   - enabled: 1
@@ -20,6 +26,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TestScene3.unity
     guid: 89ebbe5f5bb2ef74ca8f4f153ad331df
+  - enabled: 1
+    path: Assets/Scenes/TestScene4.unity
+    guid: 16cb5d57969374f528faa901e6bdc9a6
+  - enabled: 1
+    path: Assets/Scenes/TestScene5.unity
+    guid: aa801cb5f8fd94014bdce2c079abd3c8
+  - enabled: 1
+    path: Assets/Scenes/TestScene6.unity
+    guid: 037b864fcc52b4792b9413c04124c1ea
   - enabled: 1
     path: Assets/Scenes/Main Menu.unity
     guid: 361f8dac1f0496d48a0cd79b171d1a0b

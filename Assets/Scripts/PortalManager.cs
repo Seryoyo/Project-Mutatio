@@ -7,8 +7,23 @@ using UnityEngine.SceneManagement;
 public class PortalManager : MonoBehaviour
 {
     public static PortalManager instance;
-    int enemyCount; // Alive enemy components
-    DoorPortal[] portals; // Portals to enable upon room clear
+    int enemyCount;
+    DoorPortal[] portals;
+    
+    // room progression tracking
+    public int currRoomCount = 0;
+    public int totalRoomCount = 0;
+    public string miniBRoomScene = "MiniBossRoom";
+    public string bossRoomScene = "BossRoom";
+    public float specialRoomChance = 0.4f;  // 40% chance for mini boss room when eligible
+    public bool hasShownDejaVuText = false;
+    
+    // room progression thresholds
+    public int specialRoomMinCount = 5; // start checking for special room after this many rooms
+    public int specialRoomMaxCount = 8; // stops checking after this many rooms
+    public int bossRoomCount = 10;  // forces boss room after this many total rooms
+    public int dejaVuModulo = 3;    // show the text when totalRoomCount % dejaVuModulo == 0
+    public int firstDejaVuText = 6; // first time to show text
 
     private void Awake()
     {
@@ -18,16 +33,22 @@ public class PortalManager : MonoBehaviour
             return;
         }
         instance = this;
-        OnSceneLoaded(SceneManager.GetActiveScene(), LoadSceneMode.Single);
+        DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void Start()
     {
+        SetupCurrentScene();
+        
         if (enemyCount == 0)
             OpenPortals();
     }
-
 
     public void DecrementEnemyCount()
     {
@@ -38,15 +59,113 @@ public class PortalManager : MonoBehaviour
 
     public void OpenPortals()
     {
+        if (portals == null)
+            return;
+            
         foreach (var port in portals)
+        {
+            if (port == null)
+                continue;
+                
+            MaybeOverrideDestination(port);
             port.EnableDoor();
+        }
+    }
+    
+    // checks if should force a specific scene (mini boss or boss)
+    private void MaybeOverrideDestination(DoorPortal portal)
+    {
+        if (SceneManager.GetActiveScene().name == "Tutorial" || 
+            SceneManager.GetActiveScene().name == miniBRoomScene || 
+            SceneManager.GetActiveScene().name == bossRoomScene)
+            return;
+            
+        // force boss room after bossRoomCount rooms
+        if (totalRoomCount >= bossRoomCount)
+        {
+            portal.destinationScene = bossRoomScene;
+            return;
+        }
+        
+        // randomly trigger mini boss room between thresholds
+        if (currRoomCount >= specialRoomMinCount && currRoomCount < specialRoomMaxCount)
+        {
+            if (Random.value < specialRoomChance)
+            {
+                portal.destinationScene = miniBRoomScene;
+                return;
+            }
+        }
+    }
+
+    private void SetupCurrentScene()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        bool isTutorial = currentScene.name == "Tutorial";
+
+        if (currentScene.name != "MainMenu" && currentScene.name != "Death" && 
+            currentScene.name != "StartMenu" && !isTutorial)
+        {
+            currRoomCount++;
+            totalRoomCount++;
+            
+            // reset currRoomCount if we're in the mini boss room
+            if (currentScene.name == miniBRoomScene)
+                currRoomCount = 0;
+                
+            // show deja vu text based on modulo and after the first threshold
+            if (totalRoomCount >= firstDejaVuText && totalRoomCount % dejaVuModulo == 0 && gameObject != null)
+            {
+                StartCoroutine(ShowDejaVuText());
+                hasShownDejaVuText = true;
+            }
+        }
+        
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        if (enemies != null)
+            enemyCount = enemies.Where(e => e != null && e.hitpoint > 0).Count();
+        else
+            enemyCount = 0;
+
+        if (isTutorial) {
+            enemyCount = 0;
+        }
+            
+        portals = FindObjectsOfType<DoorPortal>();
     }
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Enemy[] enemies = FindObjectsOfType<Enemy>().Where(e => e.hitpoint > 0).ToArray();
-        portals = FindObjectsOfType<DoorPortal>();
-        enemyCount = enemies.Length;
+        if (this == null || !gameObject)
+            return;
+            
+        SetupCurrentScene();
     }
-
+    
+    private IEnumerator ShowDejaVuText()
+    {
+        yield return new WaitForSeconds(2f);
+        
+        if (this == null || !gameObject)
+            yield break;
+            
+        if (GameManager.instance != null && Player.instance != null)
+        {
+            string message = "Haven't I been here before?...";
+            if (totalRoomCount >= firstDejaVuText + dejaVuModulo * 2)
+            {
+                message = "I'm definitely getting deja vu...";
+            }
+            else if (totalRoomCount >= firstDejaVuText + dejaVuModulo)
+            {
+                message = "This place looks familiar...";
+            }
+            
+            GameManager.instance.ShowText(message, 
+                30, Color.white, 
+                Player.instance.transform.position, 
+                new Vector3(0, 50f, 0), 
+                3f);
+        }
+    }
 }
