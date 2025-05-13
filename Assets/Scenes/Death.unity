@@ -649,7 +649,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'YOU ARE DIEMD ):'
+  m_text: 'YOU ARE DEAMSD ):'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 75c3a1ca2336f4a07b33a5ae4d462c1e, type: 2}
   m_sharedMaterial: {fileID: -6203550014076673161, guid: 75c3a1ca2336f4a07b33a5ae4d462c1e, type: 2}

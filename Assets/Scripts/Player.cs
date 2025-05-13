@@ -143,7 +143,7 @@ public class Player : PlayerMover
     Destroy(Inventory.instance.gameObject);
     Destroy(Player.instance.gameObject);
 
-    SceneManager.LoadScene("DEATH");
+    SceneManager.LoadScene("Death");
     }
     
 }
