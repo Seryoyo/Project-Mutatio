@@ -122,16 +122,21 @@ public class PortalManager : MonoBehaviour
         }
         
         Enemy[] enemies = FindObjectsOfType<Enemy>();
-        if (enemies != null)
-            enemyCount = enemies.Where(e => e != null && e.hitpoint > 0).Count();
-        else
-            enemyCount = 0;
-
-        if (isTutorial) {
+        if (!isTutorial) {
+            if (enemies != null) {
+                enemyCount = enemies.Where(e => e != null && e.hitpoint > 0).Count();
+            } else {
+                enemyCount = 0;
+            }
+        } else {
             enemyCount = 0;
         }
             
         portals = FindObjectsOfType<DoorPortal>();
+
+        if (isTutorial && portals != null && portals.Length > 0) {
+            OpenPortals();
+        }
     }
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
