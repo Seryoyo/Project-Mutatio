@@ -9664,7 +9664,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3.8
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -10917,6 +10917,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e4852a151c97f041b3a51b96782fcdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currRoomCount: 0
+  totalRoomCount: 0
+  miniBRoomScene: MiniBossRoom
+  bossRoomScene: BossRoom
+  specialRoomChance: 0.4
+  hasShownDejaVuText: 0
+  specialRoomMinCount: 5
+  specialRoomMaxCount: 8
+  bossRoomCount: 10
+  dejaVuModulo: 3
+  firstDejaVuText: 6
 --- !u!4 &1668117705
 Transform:
   m_ObjectHideFlags: 0
