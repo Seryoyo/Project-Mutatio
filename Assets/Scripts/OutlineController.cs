@@ -15,6 +15,7 @@ public class OutlineController : MonoBehaviour
     {
         foreach (var s in GetComponentsInChildren<SpriteRenderer>())
         {
+            Debug.Log("yarrrr");
             AddOutline(s);
         }
     }
@@ -47,4 +48,3 @@ public class OutlineController : MonoBehaviour
     }
 
 }
-

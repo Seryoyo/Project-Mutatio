@@ -7434,7 +7434,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3.8
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -9981,6 +9981,17 @@ Material:
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
     - _ShineColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
+--- !u!114 &941390520 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4519258549158034554, guid: 5a9b31fc737588a43afd34a593437c75, type: 3}
+  m_PrefabInstance: {fileID: 603213727}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e96e091873a4c4488f66ef7c1314a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1032893768
 GameObject:
   m_ObjectHideFlags: 0
@@ -12019,7 +12030,7 @@ PrefabInstance:
     - target: {fileID: 6819677835444687766, guid: dda6fd6678ef54549acd44226e9a5d41, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 941390520}
     - target: {fileID: 6819677835444687766, guid: dda6fd6678ef54549acd44226e9a5d41, type: 3}
       propertyPath: currentWeapon
       value: Spoon
@@ -12031,7 +12042,7 @@ PrefabInstance:
     - target: {fileID: 6819677835444687766, guid: dda6fd6678ef54549acd44226e9a5d41, type: 3}
       propertyPath: dialogueWindow
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1339580429}
     - target: {fileID: 6819677835444687766, guid: dda6fd6678ef54549acd44226e9a5d41, type: 3}
       propertyPath: floatingTextManager
       value: 
@@ -12324,6 +12335,21 @@ MonoBehaviour:
   bossRoomCount: 10
   dejaVuModulo: 3
   firstDejaVuText: 6
+  earlyDejaVuMessages:
+  - Haven't I been here before?...
+  - This place looks familiar...
+  - I feel like I've seen this before...
+  - Something about this room feels off...
+  midDejaVuMessages:
+  - I'm definitely getting deja vu...
+  - I swear I've been through this room already...
+  - Am I going in circles?
+  - This can't be a coincidence anymore...
+  lateDejaVuMessages:
+  - I'm trapped in some kind of loop...
+  - This is the same place. I know it. I'M NOT CRAZY!
+  - Am I going insane?
+  - Am I schizophrenic?
 --- !u!4 &1882896559
 Transform:
   m_ObjectHideFlags: 0
