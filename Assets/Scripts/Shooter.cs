@@ -87,8 +87,4 @@ public class Shooter : MonoBehaviour
 
     }
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> d6b260c (fixed portal)
