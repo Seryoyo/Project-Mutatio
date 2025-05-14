@@ -115,8 +115,6 @@ public class PortalManager : MonoBehaviour
             }
         }
         
-        Debug.Log($"Checking boss room - Total count: {totalRoomCount}, Threshold: {bossRoomCount}");
-        
         // check for boss room after mini-boss check fails
         if (totalRoomCount >= bossRoomCount)
         {
@@ -135,8 +133,6 @@ public class PortalManager : MonoBehaviour
         {
             currRoomCount++;
             totalRoomCount++;
-            
-            Debug.Log($"Room counts - Current: {currRoomCount}, Total: {totalRoomCount}");
             
             // reset currRoomCount if we're in the mini boss room
             if (currentScene.name == miniBRoomScene)
