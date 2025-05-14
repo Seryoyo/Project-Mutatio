@@ -753,6 +753,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3674937859725197331, guid: aeebdc1ea81a34543a506ef4810fffdb, type: 3}
+      propertyPath: hitpoint
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3674937859725197331, guid: aeebdc1ea81a34543a506ef4810fffdb, type: 3}
+      propertyPath: chaseLength
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3674937859725197331, guid: aeebdc1ea81a34543a506ef4810fffdb, type: 3}
+      propertyPath: maxHitpoint
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3674937859725197331, guid: aeebdc1ea81a34543a506ef4810fffdb, type: 3}
+      propertyPath: triggerLength
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7441805302792825225, guid: aeebdc1ea81a34543a506ef4810fffdb, type: 3}
       propertyPath: m_Name
       value: Critter
