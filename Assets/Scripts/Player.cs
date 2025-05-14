@@ -93,7 +93,7 @@ public class Player : PlayerMover
         // tba... change to work with mutation levels
         switch (mutationName.ToLower()) {
             case ("psy-delimiter"):
-                // Update sprite
+                // tba... update this to work on a shader instead
                 SpriteRenderer red_eyes = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "red_eyes").GetComponent<SpriteRenderer>();
                 red_eyes.enabled = true;
                 GetComponent<Shooter>().bulletPrefab = Resources.Load<GameObject>("Prefabs/BulletButCooler");
@@ -133,17 +133,11 @@ public class Player : PlayerMover
 
     protected override void Death()
     {
-        // this is broken
-        // change to gameover scene
+        Destroy(GameManager.instance.gameObject);
+        Destroy(Inventory.instance.gameObject);
+        Destroy(Player.instance.gameObject);
 
-        // Heal(maxHitpoint);
-        // SceneManager.LoadScene("House");
-        // transform.position = new Vector3(5.5f, -1.3f, 0);
-    Destroy(GameManager.instance.gameObject);
-    Destroy(Inventory.instance.gameObject);
-    Destroy(Player.instance.gameObject);
-
-    SceneManager.LoadScene("Death");
+        SceneManager.LoadScene("Death");
     }
     
 }

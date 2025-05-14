@@ -13,6 +13,10 @@ public class PlayerFighter : Fighter
         if (Time.time - lastImmune > PlayerImmuneTime)
         {
             lastImmune = Time.time;
+            foreach (var sr in GetComponentsInChildren<SpriteRenderer>())
+            {
+                StartCoroutine(IFrameShader(sr));
+            }
             hitpoint -= dmg.damageAmount;
             pushDirection = (transform.position - dmg.origin).normalized * dmg.pushForce;
 

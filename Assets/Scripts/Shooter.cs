@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,7 +39,7 @@ public class Shooter : MonoBehaviour
 
     void Shoot(float x, float y)
     {
-        GameObject bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
+        GameObject bullet = Instantiate(bulletPrefab, transform.position, CalcBulletRotation(x, y));
         
         // PHYSICS STUFF (rigidbody)
         Rigidbody2D bulletRb = bullet.AddComponent<Rigidbody2D>();
@@ -56,6 +57,34 @@ public class Shooter : MonoBehaviour
         CircleCollider2D collider = bullet.AddComponent<CircleCollider2D>();
         collider.isTrigger = true; 
         collider.radius = 0.1f; 
+    }
+
+    private Quaternion CalcBulletRotation(float x, float y)
+    {
+        var x_sign = Math.Sign(x);
+        var y_sign = Math.Sign(y);
+
+        switch (x_sign, y_sign)
+        {
+            case (1, 0):
+            default:
+                return Quaternion.AngleAxis(0, Vector3.forward);
+            case (1, 1):
+                return Quaternion.AngleAxis(45, Vector3.forward);
+            case (0, 1):
+                return Quaternion.AngleAxis(90, Vector3.forward);
+            case (-1, 1):
+                return Quaternion.AngleAxis(135, Vector3.forward);
+            case (-1, 0):
+                return Quaternion.AngleAxis(180, Vector3.forward);
+            case (-1, -1):
+                return Quaternion.AngleAxis(225, Vector3.forward);
+            case (0, -1):
+                return Quaternion.AngleAxis(270, Vector3.forward);
+            case (1, -1):
+                return Quaternion.AngleAxis(315, Vector3.forward);
+        }
+
     }
 
 }
