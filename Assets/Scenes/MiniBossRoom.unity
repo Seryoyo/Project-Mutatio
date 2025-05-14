@@ -7367,7 +7367,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -11083,10 +11083,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currRoomCount: 0
   totalRoomCount: 0
-  specialRoomScene: SpecialRoom
+  miniBRoomScene: MiniBossRoom
   bossRoomScene: BossRoom
   specialRoomChance: 0.4
   hasShownDejaVuText: 0
+  specialRoomMinCount: 5
+  specialRoomMaxCount: 8
+  bossRoomCount: 10
+  dejaVuModulo: 3
+  firstDejaVuText: 6
 --- !u!4 &1882896559
 Transform:
   m_ObjectHideFlags: 0
