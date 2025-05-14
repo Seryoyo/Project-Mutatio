@@ -9,6 +9,7 @@ public class PortalManager : MonoBehaviour
     public static PortalManager instance;
     int enemyCount;
     DoorPortal[] portals;
+    private string lastLoadedScene = "";
     
     // room progression tracking
     public int currRoomCount = 0;
@@ -19,11 +20,11 @@ public class PortalManager : MonoBehaviour
     public bool hasShownDejaVuText = false;
     
     // room progression thresholds
-    public int miniBossMinCount = 6; // start checking for mini boss room after this many rooms
-    public int miniBossMaxCount = 9; // stops checking after this many rooms
-    public int bossRoomCount = 20;  // forces boss room after this many total rooms
+    public int miniBossMinCount = 4; // start checking for mini boss room after this many rooms
+    public int miniBossMaxCount = 8; // stops checking after this many rooms
+    public int bossRoomCount = 10;  // forces boss room after this many total rooms
     public int dejaVuModulo = 3;    // show the text when totalRoomCount % dejaVuModulo == 0
-    public int firstDejaVuText = 6; // first time to show text
+    public int firstDejaVuText = 3; // first time to show text
 
     // random deja vu messages for different stages of the game
     [Header("Déjà Vu Messages")]
@@ -70,8 +71,6 @@ public class PortalManager : MonoBehaviour
 
     private void Start()
     {
-        SetupCurrentScene();
-        
         if (enemyCount == 0)
             OpenPortals();
     }
@@ -106,14 +105,7 @@ public class PortalManager : MonoBehaviour
             SceneManager.GetActiveScene().name == bossRoomScene)
             return;
             
-        // force boss room after bossRoomCount rooms
-        if (totalRoomCount >= bossRoomCount)
-        {
-            portal.destinationScene = bossRoomScene;
-            return;
-        }
-        
-        // randomly trigger mini boss room between thresholds
+        // check miniboss room first (takes priority over boss room)
         if (currRoomCount >= miniBossMinCount && currRoomCount < miniBossMaxCount)
         {
             if (Random.value < miniBossChance)
@@ -121,6 +113,15 @@ public class PortalManager : MonoBehaviour
                 portal.destinationScene = miniBRoomScene;
                 return;
             }
+        }
+        
+        Debug.Log($"Checking boss room - Total count: {totalRoomCount}, Threshold: {bossRoomCount}");
+        
+        // check for boss room after mini-boss check fails
+        if (totalRoomCount >= bossRoomCount)
+        {
+            portal.destinationScene = bossRoomScene;
+            return;
         }
     }
 
@@ -134,6 +135,8 @@ public class PortalManager : MonoBehaviour
         {
             currRoomCount++;
             totalRoomCount++;
+            
+            Debug.Log($"Room counts - Current: {currRoomCount}, Total: {totalRoomCount}");
             
             // reset currRoomCount if we're in the mini boss room
             if (currentScene.name == miniBRoomScene)
@@ -169,8 +172,19 @@ public class PortalManager : MonoBehaviour
     {
         if (this == null || !gameObject)
             return;
-            
-        SetupCurrentScene();
+
+        bool isNewScene = (lastLoadedScene != scene.name);
+        lastLoadedScene = scene.name;
+
+        if (isNewScene) {
+            SetupCurrentScene();
+        } else {
+            portals = FindObjectsOfType<DoorPortal>();
+            bool isTutorial = scene.name == "Tutorial";
+            if (isTutorial || enemyCount == 0) {
+                OpenPortals();
+            }
+        }
     }
     
     private IEnumerator ShowDejaVuText()
