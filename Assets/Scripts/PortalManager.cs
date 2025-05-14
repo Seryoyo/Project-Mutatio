@@ -15,13 +15,13 @@ public class PortalManager : MonoBehaviour
     public int totalRoomCount = 0;
     public string miniBRoomScene = "MiniBossRoom";
     public string bossRoomScene = "BossRoom";
-    public float specialRoomChance = 0.4f;  // 40% chance for mini boss room when eligible
+    public float miniBossChance = 0.25f;  // 40% chance for mini boss room when eligible
     public bool hasShownDejaVuText = false;
     
     // room progression thresholds
-    public int specialRoomMinCount = 5; // start checking for special room after this many rooms
-    public int specialRoomMaxCount = 8; // stops checking after this many rooms
-    public int bossRoomCount = 10;  // forces boss room after this many total rooms
+    public int miniBossMinCount = 6; // start checking for mini boss room after this many rooms
+    public int miniBossMaxCount = 9; // stops checking after this many rooms
+    public int bossRoomCount = 20;  // forces boss room after this many total rooms
     public int dejaVuModulo = 3;    // show the text when totalRoomCount % dejaVuModulo == 0
     public int firstDejaVuText = 6; // first time to show text
 
@@ -88,9 +88,9 @@ public class PortalManager : MonoBehaviour
         }
         
         // randomly trigger mini boss room between thresholds
-        if (currRoomCount >= specialRoomMinCount && currRoomCount < specialRoomMaxCount)
+        if (currRoomCount >= miniBossMinCount && currRoomCount < miniBossMaxCount)
         {
-            if (Random.value < specialRoomChance)
+            if (Random.value < miniBossChance)
             {
                 portal.destinationScene = miniBRoomScene;
                 return;
