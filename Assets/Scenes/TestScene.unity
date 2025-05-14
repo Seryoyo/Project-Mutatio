@@ -9519,6 +9519,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7173559266304979897, guid: 0019fb0a225d4174aa2f1f9bb3d44e8d, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1301797716}
+    - target: {fileID: 7173559266304979897, guid: 0019fb0a225d4174aa2f1f9bb3d44e8d, type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7173559266304979897, guid: 0019fb0a225d4174aa2f1f9bb3d44e8d, type: 3}
+      propertyPath: m_PlaneDistance
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7200599089807683349, guid: 0019fb0a225d4174aa2f1f9bb3d44e8d, type: 3}
       propertyPath: m_Pivot.x
       value: 0
