@@ -25,6 +25,32 @@ public class PortalManager : MonoBehaviour
     public int dejaVuModulo = 3;    // show the text when totalRoomCount % dejaVuModulo == 0
     public int firstDejaVuText = 6; // first time to show text
 
+    // random deja vu messages for different stages of the game
+    [Header("Déjà Vu Messages")]
+    public string[] earlyDejaVuMessages = new string[] 
+    {
+        "Haven't I been here before?...",
+        "This place looks familiar...",
+        "I feel like I've seen this before...",
+        "Something about this room feels off..."
+    };
+    
+    public string[] midDejaVuMessages = new string[] 
+    {
+        "I'm definitely getting deja vu...",
+        "I swear I've been through this room already...",
+        "Am I going in circles?",
+        "This can't be a coincidence anymore..."
+    };
+    
+    public string[] lateDejaVuMessages = new string[] 
+    {
+        "I'm trapped in some kind of loop...",
+        "This is the same place. I know it. I'M NOT CRAZY!",
+        "Am I going insane?",
+        "Am I schizophrenic?",
+    };
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -156,15 +182,22 @@ public class PortalManager : MonoBehaviour
             
         if (GameManager.instance != null && Player.instance != null)
         {
-            string message = "Haven't I been here before?...";
-            if (totalRoomCount >= firstDejaVuText + dejaVuModulo * 2)
+            string[] messageArray;
+            
+            if (totalRoomCount >= firstDejaVuText + dejaVuModulo * 4)
             {
-                message = "I'm definitely getting deja vu...";
+                messageArray = lateDejaVuMessages;
             }
-            else if (totalRoomCount >= firstDejaVuText + dejaVuModulo)
+            else if (totalRoomCount >= firstDejaVuText + dejaVuModulo * 2)
             {
-                message = "This place looks familiar...";
+                messageArray = midDejaVuMessages;
             }
+            else
+            {
+                messageArray = earlyDejaVuMessages;
+            }
+            
+            string message = messageArray[Random.Range(0, messageArray.Length)];
             
             GameManager.instance.ShowText(message, 
                 30, Color.white, 
