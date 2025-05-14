@@ -9515,6 +9515,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FloatingTextCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1604990338617260404, guid: 0019fb0a225d4174aa2f1f9bb3d44e8d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7200599089807683349, guid: 0019fb0a225d4174aa2f1f9bb3d44e8d, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -9718,7 +9722,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -9778,6 +9782,55 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
+--- !u!1 &1302812658
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1302812660}
+  - component: {fileID: 1302812659}
+  m_Layer: 0
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1302812659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302812658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 74f797b3c5bde4203849a623464f4b22, type: 2}
+--- !u!4 &1302812660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302812658}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 5.58, y: 6.15, z: 3.29}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1484251278
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11290,6 +11343,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 260626984485949836, guid: 1f1b70b830025e74ab794fcb24e68697, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 688293102307621847, guid: 1f1b70b830025e74ab794fcb24e68697, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2210584701048189622, guid: 1f1b70b830025e74ab794fcb24e68697, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -11373,6 +11434,10 @@ PrefabInstance:
     - target: {fileID: 6173520138101278912, guid: 1f1b70b830025e74ab794fcb24e68697, type: 3}
       propertyPath: m_Name
       value: DialogueCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6173520138101278912, guid: 1f1b70b830025e74ab794fcb24e68697, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8899638938598109326, guid: 1f1b70b830025e74ab794fcb24e68697, type: 3}
       propertyPath: m_Enabled
@@ -11774,3 +11839,4 @@ SceneRoots:
   - {fileID: 1668117705}
   - {fileID: 1937751462}
   - {fileID: 1875619399336506128}
+  - {fileID: 1302812660}
