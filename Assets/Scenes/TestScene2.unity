@@ -2329,7 +2329,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
-  destinationScene: TestScene3
+  destinationScene: TestScene4
   spawnPoint: {x: 0, y: 0, z: 0}
   flipSprite: 0
   isSideDoor: 1
