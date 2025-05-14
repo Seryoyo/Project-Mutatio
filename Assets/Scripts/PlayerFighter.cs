@@ -12,10 +12,17 @@ public class PlayerFighter : Fighter
     {
         if (Time.time - lastImmune > PlayerImmuneTime)
         {
+<<<<<<< HEAD
             lastImmune = Time.time;
             foreach (var sr in GetComponentsInChildren<SpriteRenderer>())
             {
                 StartCoroutine(IFrameShader(sr));
+=======
+            lastImmune = Time.time;
+            foreach (var sr in GetComponentsInChildren<SpriteRenderer>())
+            {
+                StartCoroutine(IFrameShader(sr));
+>>>>>>> d6b260c (fixed portal)
             }
             hitpoint -= dmg.damageAmount;
             pushDirection = (transform.position - dmg.origin).normalized * dmg.pushForce;

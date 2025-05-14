@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: e63d39605a6288f47ac2d7a50c44e71d
+=======
+guid: 5cc70e29055404b86b26513b966bc214
+>>>>>>> d6b260c (fixed portal)
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

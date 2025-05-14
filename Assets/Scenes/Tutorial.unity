@@ -12317,31 +12317,13 @@ MonoBehaviour:
   totalRoomCount: 0
   miniBRoomScene: MiniBossRoom
   bossRoomScene: BossRoom
-  miniBossChance: 0.5
+  miniBossChance: 0.25
   hasShownDejaVuText: 0
-  miniBossMinCount: 4
-  miniBossMaxCount: 8
+  miniBossMinCount: 6
+  miniBossMaxCount: 9
   bossRoomCount: 10
   dejaVuModulo: 3
-  firstDejaVuText: 3
-  earlyDejaVuMessages:
-  - Haven't I been here before?...
-  - This place looks familiar...
-  - I feel like I've seen this before...
-  - Something about this room feels off...
-  midDejaVuMessages:
-  - I'm definitely getting deja vu...
-  - I swear I've been through this room already...
-  - Am I going in circles?
-  - This can't be a coincidence anymore...
-  - This can't be a coincidence anymore...
-  lateDejaVuMessages:
-  - I'm trapped in some kind of loop...
-  - This is the same place. I know it. I'M NOT CRAZY!
-  - Am I going insane?
-  - Am I schizophrenic?
-  - Am I schizophrenic?
-  - Am I schizophrenic?
+  firstDejaVuText: 6
 --- !u!4 &1882896559
 Transform:
   m_ObjectHideFlags: 0
