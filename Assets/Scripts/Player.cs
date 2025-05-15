@@ -148,15 +148,17 @@ public class Player : PlayerMover
             SpriteRenderer red_eyes = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "red_eyes").GetComponent<SpriteRenderer>();
             red_eyes.enabled = true;
             shooter.bulletPrefab = Resources.Load<GameObject>("Prefabs/BulletButCooler");
-            Debug.Log("You feel psychic energy crackling at your fingertips.");
+            GameManager.instance.ShowText("You feel psychic energy crackling at your fingertips.", 30, UnityEngine.Color.magenta, transform.position, new Vector3(0, 50f, 0), 2f);
         }
         else if (bulletLevel == 3)
         {
             // tba: make ourple with shader
             SpriteRenderer red_eyes = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "red_eyes").GetComponent<SpriteRenderer>();
             red_eyes.enabled = true;
+            red_eyes.material.SetFloat("_HsvShift", 120f); // make purble
+            red_eyes.material.SetFloat("_HsvSaturation", 2f);
             shooter.bulletPrefab = Resources.Load<GameObject>("Prefabs/BulletButCoolest");
-            Debug.Log("You feel the boundaries between your mind and reality blurring.");
+            GameManager.instance.ShowText("You feel the boundaries between your mind and reality blurring.", 30, UnityEngine.Color.magenta, transform.position, new Vector3(0, 50f, 0), 2f);
         }
     }
 
@@ -169,10 +171,35 @@ public class Player : PlayerMover
         Debug.Log("Upgraded max health.");
         Debug.Log($"hitpoint: {hitpoint}");
         Debug.Log($"maxHitpoint: {maxHitpoint}");
+        var arms = GetComponentsInChildren<SpriteRenderer>(true).Where(sr => sr.CompareTag("Arm"));
         if (healthLevel == 2)
+        {
+            foreach (var arm in arms)
+            {
+                switch (arm.name)
+                {
+                    case "larm_s2": case "rarm_s2":
+                        arm.enabled = true; break;
+                    default:
+                        arm.enabled = false; break;
+                }
+            }
             GameManager.instance.ShowText("You feel your resilience growing.", 30, UnityEngine.Color.magenta, transform.position, new Vector3(0, 50f, 0), 2f);
+        }
         else
+        {
+            foreach (var arm in arms)
+            {
+                switch (arm.name)
+                {
+                    case "larm_s3": case "rarm_s3":
+                        arm.enabled = true; break;
+                    default:
+                        arm.enabled = false; break;
+                }
+            }
             GameManager.instance.ShowText("You feel vitality flooding your being.", 30, UnityEngine.Color.magenta, transform.position, new Vector3(0, 50f, 0), 2f);
+        }
     }
 
     public void UpgradeSpeed()
@@ -185,10 +212,21 @@ public class Player : PlayerMover
         Debug.Log($"xSpeed: {xSpeed}");
         Debug.Log($"ySpeed: {ySpeed}");
 
+        var leftLeggy = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "lleg").GetComponent<SpriteRenderer>();
+        var rightLeggy = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "rleg").GetComponent<SpriteRenderer>();
+
         if (speedLevel == 2)
+        {
+            leftLeggy.material.SetFloat("_GhostBlend", 1f);
+            rightLeggy.material.SetFloat("_GhostBlend", 1f);
             GameManager.instance.ShowText("You feel the world slow down around you.", 30, UnityEngine.Color.magenta, transform.position, new Vector3(0, 50f, 0), 2f);
+        }
         else
+        {
+            leftLeggy.material.SetFloat("_HologramBlend", 1f);
+            rightLeggy.material.SetFloat("_HologramBlend", 1f);
             GameManager.instance.ShowText("Your reflexes sharpen to impossible heights.", 30, UnityEngine.Color.magenta, transform.position, new Vector3(0, 50f, 0), 2f);
+        }
     }
 
     public void AddMutationPoints(float mutPt) {
