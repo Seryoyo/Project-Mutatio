@@ -126,16 +126,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e9556307c9af3242910f2178860d0fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  lifeTime: 2
-  damageAmount: 1
+  damageAmount: 2
   pushForce: 1
+  lifeTime: 2
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!61 &-7110073160401673953
 BoxCollider2D:
   m_ObjectHideFlags: 0
