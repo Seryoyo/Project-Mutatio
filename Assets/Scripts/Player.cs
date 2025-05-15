@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -213,7 +214,23 @@ public class Player : PlayerMover
     }
 
     public bool HasFullHealth() => (hitpoint >= maxHitpoint);
-    public bool CanMutate(float addtlPt) => ((addtlPt + mutationPoint) <= maxMutationPoint);
+    public bool CanMutate(float addtlPt, string mutationType) {
+        var maxedLevel = true;
+        switch (mutationType.ToLower())
+        {
+            case ("psy-delimiter"):
+                maxedLevel = (bulletLevel >= 3);
+                break;
+            case ("cell fortifier"):
+                maxedLevel = (healthLevel >= 3);
+                break;
+            case ("inertia suppressant"):
+                maxedLevel = (speedLevel >= 3);
+                break;
+            default: return false;
+        }
+        return (!maxedLevel) && ((addtlPt + mutationPoint) <= maxMutationPoint);
+    }
     public bool HasNoMutationPoints() => (mutationPoint <= 0);
     protected override void UpdateHealthBar() => base.UpdateHealthBar();
 

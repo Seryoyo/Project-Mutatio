@@ -7,11 +7,12 @@ using static Item;
 
 public interface IItem
 {
-    public string itemID { set;  get; } // How it's name in inventory, sprites...
+    public string itemID { set;  get; } // How it's named in inventory, sprites
     public string desc { set; get; } // Flavor text
     public Category category { set; get; } // Determines possible interactions
     public string spriteID { set; get; }
     public void UseItem() { }
+    public bool CanUseItem();
 }
 
 public class Item : IItem
@@ -40,6 +41,7 @@ public class Item : IItem
     }
 
     public virtual void UseItem() { } // Do nothin by default
+    public virtual bool CanUseItem() => false;
 
     // this game doesn't use this 
     public class Equippable : Item // Weapon
@@ -96,11 +98,13 @@ public class Item : IItem
 
         public override bool ActivateEffect()
         {
-            if (Player.instance.HasFullHealth())
+            if (!CanUseItem()) 
                 return false;
             Player.instance.Heal(healAmt);
             return true;
         }
+
+        public override bool CanUseItem() => (!Player.instance.HasFullHealth());
     }
 
     public class MutatorItem : Consumable
@@ -115,13 +119,15 @@ public class Item : IItem
 
         public override bool ActivateEffect()
         {
-            if (!Player.instance.CanMutate(mutateAmt)) // make sure mutation bar has room
+            if (!CanUseItem()) // make sure mutation bar has room
                 return false;
             Player.instance.ActivateMutation(itemID);
             Player.instance.AddMutationPoints(mutateAmt);
             Inventory.instance.UpdateMutationBar();
             return true;
         }
+
+        public override bool CanUseItem() => (Player.instance.CanMutate(mutateAmt, itemID));
     }
 
     // Reduce mutation side effect... meter... thing
@@ -137,11 +143,13 @@ public class Item : IItem
 
         public override bool ActivateEffect()
         {
-            if (Player.instance.HasNoMutationPoints()) // nothing to heal 
+            if (!CanUseItem()) // nothing to heal 
                 return false;
             Player.instance.HealMutation(mutateHealAmt);
             return true;
         }
+
+        public override bool CanUseItem() => !Player.instance.HasNoMutationPoints();
     }
 
 }

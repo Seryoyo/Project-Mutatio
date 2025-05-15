@@ -33,12 +33,12 @@ public class GameManager : MonoBehaviour
         inventory = new Dictionary<string, int>()
         {
             // zero out before publishing OK!!!
-            ["Band-Aid"] = 1,
-            ["Regeneration Tablet"] = 1,
-            ["Neural Stabilizer"] = 1,
-            ["Psy-Delimiter"] = 1,
-            ["Cell Fortifier"] = 1,
-            ["Inertia Suppressant"] = 1,
+            ["Band-Aid"] = 3,
+            ["Regeneration Tablet"] = 3,
+            ["Neural Stabilizer"] = 3,
+            ["Psy-Delimiter"] = 3,
+            ["Cell Fortifier"] = 3,
+            ["Inertia Suppressant"] = 3,
         };
     }
 

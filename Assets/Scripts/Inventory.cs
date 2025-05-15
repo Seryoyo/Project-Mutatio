@@ -88,7 +88,6 @@ public class Inventory : MonoBehaviour
             slotsIndex++;
         }
 
-        // fuck my stupid baka life
         if (GameManager.instance != null &&
             GameManager.instance.inventory != null &&
             selectedItem != null &&
@@ -128,20 +127,25 @@ public class Inventory : MonoBehaviour
         UpdateButton();
     }
 
+
+    // Update button depending on item category
     public void UpdateButton()
     {
-        Debug.Log("Updating button");
-        // Update button depending on item category
         if (selectedItem == null || selectedItem.category == (Category)1) // Misc
         {
             UseItemButton.interactable = false;
             UseItemButtonText.text = "";
         } else {
-            if (selectedItem.category == Category.Consumable) // Consumable
+            if (selectedItem.category == Category.Consumable)
+            { // Consumable
                 UseItemButtonText.text = "USE";
+            }
             else
                 UseItemButtonText.text = "EQUIP"; // Equipment
-            UseItemButton.interactable = true;
+            if (selectedItem.CanUseItem())
+                UseItemButton.interactable = true;
+            else
+                UseItemButton.interactable = false;
         }
     }
 
