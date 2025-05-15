@@ -23,9 +23,6 @@ public class Enemy : Mover
 
     // Hitbox
     public BoxCollider2D weaponHitbox; // Weapon hitbox
-    // private Collider2D[] hits = new Collider2D[10];
-
-    public string droppedItem = null;
 
 
     protected override void Start()
@@ -70,6 +67,7 @@ public class Enemy : Mover
                 }
 
                 collidingWithPlayer = false;
+
                 /*boxCollider.OverlapCollider(filter, hits);
                 for (int i = 0; i < hits.Length; i++)
                 {
@@ -114,9 +112,7 @@ public class Enemy : Mover
     protected override void Death()
     {
         PortalManager.instance.DecrementEnemyCount();
-        // tba... change to list of possible drops... add RNG...
-        if (droppedItem != null && droppedItem.Length >= 1)
-            GameManager.instance.GrantItem(droppedItem, 1);
+        GameManager.instance.CalculateRandomDrop();
         Destroy(gameObject);
     }
 

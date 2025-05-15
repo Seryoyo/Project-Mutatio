@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -42,7 +43,6 @@ public class Inventory : MonoBehaviour
         UpdateInventory();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q))
@@ -60,7 +60,6 @@ public class Inventory : MonoBehaviour
             animator.SetTrigger("show");
         else
             animator.SetTrigger("hide");
-
         isShowing = !isShowing;
     }
 
@@ -69,9 +68,8 @@ public class Inventory : MonoBehaviour
         int slotsIndex = 0;
         foreach (var kv in GameManager.instance.inventory)
         {
-            if (kv.Value > 0)
+            if (kv.Value > 0 && GetItemFromName(kv.Key) is IItem entry)
             {
-                IItem entry = GetItemFromName(kv.Key);
                 if (entry != null)
                 {
                     slots[slotsIndex].item = entry;
@@ -83,23 +81,30 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
+
         while (slotsIndex < slots.Length) // Blank out all the unused slots
         {
             slots[slotsIndex].BlankOutSlot();
             slotsIndex++;
         }
 
-        // TODO: f selected item is null or its value from gamemanager key <= 0, deselect..?
-        selectedItem = ((slots[0].item != null) ? slots[0].item : null); // for now: select first item in list (or no item if there are none left)
+        // fuck my stupid baka life
+        if (GameManager.instance != null &&
+            GameManager.instance.inventory != null &&
+            selectedItem != null &&
+            GameManager.instance.inventory.ContainsKey(selectedItem.itemID) &&
+            GameManager.instance.inventory[selectedItem.itemID] == 0)
+        {
+            selectedItem = (GameManager.instance.inventory[slots[0].item.itemID] == 0) ? null : slots[0].item;
+        }
+
         UpdateItemDetails();
     }
 
     public void OnUseButtonClicked()
     {
         selectedItem.UseItem();
-        if (selectedItem.GetType() == typeof(Consumable)) { // used up item
-            UpdateInventory();
-        }
+        UpdateInventory();
     }
 
     public void SelectItem(IItem selected)
@@ -125,13 +130,14 @@ public class Inventory : MonoBehaviour
 
     public void UpdateButton()
     {
+        Debug.Log("Updating button");
         // Update button depending on item category
         if (selectedItem == null || selectedItem.category == (Category)1) // Misc
         {
             UseItemButton.interactable = false;
             UseItemButtonText.text = "";
         } else {
-            if (selectedItem.category == (Category)2) // Consumable
+            if (selectedItem.category == Category.Consumable) // Consumable
                 UseItemButtonText.text = "USE";
             else
                 UseItemButtonText.text = "EQUIP"; // Equipment
@@ -168,40 +174,39 @@ public class Inventory : MonoBehaviour
                         return new HealingItem(
                             name: "Band-Aid",
                             desc: "A standard-issue adhesive bandage. <color=green><b>(15% HEAL)</b></color>",
-                            category: (Category)2,
+                            category: Category.Consumable,
                             healAmt: Player.instance.maxHitpoint * .15f);
                     case ("regeneration tablet"):
                         return new HealingItem(
                             name: "Regeneration Tablet",
                             desc: "An experimental compound that rapidly rebuilds cellular structure. <color=green><b>(FULL HEAL)</b></color>",
-                            category: (Category)2,
+                            category: Category.Consumable,
                             healAmt: Player.instance.maxHitpoint);
                     case ("neural stabilizer"):
                         return new MutationHealingItem(
                             name: "Neural Stabilizer",
                             desc: "Mitigates mutation-induced neural degradation. <color=lightblue><b>(-MUT)</b></color>",
-                            category: (Category)2,
+                            category: Category.Consumable,
                             mutateHealAmt: 2f);
                     case ("psy-delimiter"):
                         return new MutatorItem(
                             name: "Psy-Delimiter",
-                            desc: "Amplifies brainwave patterns beyond normal constraints <color=purple><b>(++MUT)</b></color>",
-                            category: (Category)2,
+                            desc: "Amplifies psychic energy beyond human constraints. <color=purple><b>(++MUT)</b></color>",
+                            category: Category.Consumable,
                             mutateAmt: 4f);
                     case ("cell fortifier"):
                         return new MutatorItem(
                             name: "Cell Fortifier",
                             desc: "Stabilizes DNA for enhanced resistance. <color=purple><b>(+MUT)</b></color>",
-                            category: (Category)2,
+                            category: Category.Consumable,
                             mutateAmt: 2f);
-                    case ("intertia suppressant"):
+                    case ("inertia suppressant"):
                         return new MutatorItem(
-                            name: "Inertia Supressant",
+                            name: "Inertia Suppressant",
                             desc: "Optimizes muscle fiber response time. <color=purple><b>(+MUT)</b></color>",
-                            category: (Category)2,
+                            category: Category.Consumable,
                             mutateAmt: 2f);
                     default: break;
-
                 }
             }
         }
