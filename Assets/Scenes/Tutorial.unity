@@ -10203,6 +10203,7 @@ MonoBehaviour:
   bg: {fileID: 8300000, guid: ed69988749af9420e8429f994fa16edc, type: 3}
   heartbeat: {fileID: 8300000, guid: 6dd2a4ca07d194b2099ffd0e900debc7, type: 3}
   userShoot: {fileID: 8300000, guid: ebbed237de04ca44eaab696610ddc5c2, type: 3}
+  bossMusic: {fileID: 8300000, guid: 008a90765f10341e6a2f7e42a95fc3f6, type: 3}
 --- !u!4 &1036564916
 Transform:
   m_ObjectHideFlags: 0

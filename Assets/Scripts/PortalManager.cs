@@ -10,6 +10,7 @@ public class PortalManager : MonoBehaviour
     int enemyCount;
     DoorPortal[] portals;
     private string lastLoadedScene = "";
+    MusicManager musicManager;
     
     // room progression tracking
     public int currRoomCount = 0;
@@ -60,6 +61,7 @@ public class PortalManager : MonoBehaviour
             return;
         }
         instance = this;
+        musicManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<MusicManager>();
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
@@ -114,6 +116,7 @@ public class PortalManager : MonoBehaviour
             
         if (totalRoomCount >= bossRoomCount) {
             portal.destinationScene = bossRoomScene;
+            musicManager.BossChange(musicManager.bossMusic);
             return;
         }
         

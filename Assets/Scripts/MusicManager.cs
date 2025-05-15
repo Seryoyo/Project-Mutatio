@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MusicManager : MonoBehaviour {
-    MusicManager musicManager;
+public class MusicManager : MonoBehaviour
+{
+    public static MusicManager instance;
     [Header("Audio Sources")]
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioSource layerSource;
@@ -14,22 +15,21 @@ public class MusicManager : MonoBehaviour {
     public AudioClip bg;
     public AudioClip heartbeat;
     public AudioClip userShoot;
+    public AudioClip bossMusic;
 
     public void Awake()
     {
-        if (musicManager == null)
-        {
-            musicManager = this;
-
-            DontDestroyOnLoad(gameObject);
-        }
-        else
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
+            return;
         }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
-    private void Start() {
+    private void Start()
+    {
         musicSource.clip = bg;
         musicSource.loop = true;
         musicSource.volume = 0.1f;
@@ -40,7 +40,17 @@ public class MusicManager : MonoBehaviour {
         layerSource.Play();
     }
 
-    public void PlaySFX(AudioClip clip) {
+    public void PlaySFX(AudioClip clip)
+    {
         SFXSource.PlayOneShot(clip);
+    }
+
+    public void BossChange(AudioClip clip)
+    {
+        musicSource.Stop();
+        musicSource.clip = clip;
+        musicSource.loop = true;
+        musicSource.Play();
+        layerSource.volume = 0.4f;
     }
 }
