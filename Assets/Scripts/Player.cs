@@ -110,7 +110,7 @@ public class Player : PlayerMover
 
     public void HealMutation(float mutHealAmt)
     {
-        mutationPoint = Mathf.Min(mutationPoint - mutHealAmt, 0);
+        mutationPoint = Mathf.Max(mutationPoint - mutHealAmt, 0);
         Inventory.instance.UpdateMutationBar();
     }
 
