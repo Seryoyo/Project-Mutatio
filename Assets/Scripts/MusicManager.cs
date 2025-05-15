@@ -53,4 +53,12 @@ public class MusicManager : MonoBehaviour
         musicSource.Play();
         layerSource.volume = 0.4f;
     }
+
+    public void resetAudio(AudioClip clip) {
+        musicSource.Stop();
+        musicSource.clip = clip;
+        musicSource.loop = true;
+        musicSource.Play();
+        layerSource.volume = 0.2f;
+    }
 }

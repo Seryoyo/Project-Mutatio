@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Game.unity
     guid: 4acf21b62f3536140986f9864fbfa9ce
   - enabled: 1
+    path: Assets/Scenes/End.unity
+    guid: a837a0dfb19d24c8f9d104db9d72ae94
+  - enabled: 1
     path: Assets/Scenes/MiniBossRoom.unity
     guid: d828900777a9e49498dccd8dc2b444ce
   - enabled: 1
