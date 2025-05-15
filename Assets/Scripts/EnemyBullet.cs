@@ -1,25 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public GameObject player;
+    [Header("Damage Settings")]
+    public float damageAmount = 1f;
+    public float pushForce = 1f;
+    public float lifeTime = 2f;
+    public LayerMask playerLayer; // Set to "Player" layer in Inspector
+
     private Rigidbody2D rb;
-    public float force;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.Find("Player");
-
-        Vector3 direction = player.transform.position - transform.position;
-        rb.velocity = new Vector2(direction.x, direction.y).normalized * force;
+        Destroy(gameObject, lifeTime);
+        
+        // Find player and shoot toward them
+        GameObject player = GameObject.Find("Player");
+        if (player != null)
+        {
+            Vector2 direction = (player.transform.position - transform.position).normalized;
+            rb.velocity = direction * 10f;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        //Check if hit player
+        if (((1 << collision.gameObject.layer) & playerLayer) != 0)
+        {
+            Player player = collision.GetComponent<Player>();
+            if (player != null)
+            {
+                Damage damage = new Damage()
+                {
+                    damageAmount = this.damageAmount,
+                    pushForce = this.pushForce,
+                    origin = transform.position
+                };
+                player.ReceiveDamage(damage);
+                Destroy(gameObject);
+                return;
+            }
+        }
+
     }
 }
