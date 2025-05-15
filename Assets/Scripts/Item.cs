@@ -41,6 +41,7 @@ public class Item : IItem
 
     public virtual void UseItem() { } // Do nothin by default
 
+    // this game doesn't use this 
     public class Equippable : Item // Weapon
     {
         public int dmg;
@@ -52,7 +53,7 @@ public class Item : IItem
             this.pushForce = pushForce;
         }
 
-        // Equip weapon.
+        // Equip weapon
         public override void UseItem()
         {
             /*
@@ -72,8 +73,7 @@ public class Item : IItem
     public class Consumable : Item
     {
         public Consumable(string name, string desc, Category category, string spriteID = null)
-            : base(name, desc, category, spriteID = null)
-        {}
+            : base(name, desc, category, spriteID = null) {}
 
         public override void UseItem()
         {
@@ -115,9 +115,8 @@ public class Item : IItem
 
         public override bool ActivateEffect()
         {
-            if (!Player.instance.CanMutate(mutateAmt))
+            if (!Player.instance.CanMutate(mutateAmt)) // make sure mutation bar has room
                 return false;
-            Debug.Log(itemID);
             Player.instance.ActivateMutation(itemID);
             Player.instance.AddMutationPoints(mutateAmt);
             Inventory.instance.UpdateMutationBar();

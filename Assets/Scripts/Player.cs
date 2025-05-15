@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEngine.Rendering.PostProcessing.SubpixelMorphologicalAntialiasing;
 
 public class Player : PlayerMover
 {
@@ -20,12 +21,38 @@ public class Player : PlayerMover
     // Mutations and stat upgrades
     public float mutationPoint;
     public float maxMutationPoint;
-    
-    // public int bulletLevel;
-    // public int speedLevel;
-    // what other upgrades... idk
-    // oh yeah :-) max hp! increase...
 
+    private int _bulletLevel = 1;
+    private int _healthLevel = 1;
+    private int _speedLevel = 1;
+
+    public int bulletLevel
+    {
+        get => _bulletLevel;
+        set
+        {
+            if ((value >= 1 || value <= 3))
+                _bulletLevel = value;
+        }
+    }
+    public int healthLevel
+    {
+        get => _healthLevel;
+        set
+        {
+            if ((value >= 1 || value <= 3))
+                _healthLevel = value;
+        }
+    }
+    private int speedLevel
+    {
+        get => _speedLevel;
+        set
+        {
+            if ((value >= 1 || value <= 3))
+                _speedLevel = value;
+        }
+    }
 
     private void Awake()
     {
@@ -93,15 +120,74 @@ public class Player : PlayerMover
         // tba... change to work with mutation levels
         switch (mutationName.ToLower()) {
             case ("psy-delimiter"):
-                // tba... update this to work on a shader instead
-                SpriteRenderer red_eyes = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "red_eyes").GetComponent<SpriteRenderer>();
-                red_eyes.enabled = true;
-                GetComponent<Shooter>().bulletPrefab = Resources.Load<GameObject>("Prefabs/BulletButCooler");
+                UpgradeBullet();
+                return;
+            case ("cell fortifier"):
+                UpgradeHealth();
+                return;
+            case ("inertia suppressant"):
+                UpgradeSpeed();
                 return;
             default:
                 Debug.Log("ermmmmm... mutation not found...");
                 return;
         } 
+    }
+
+    public void UpgradeBullet()
+    {
+        if (bulletLevel >= 3 || bulletLevel < 1) return;
+        bulletLevel++;
+        Debug.Log("Upgraded bullet.");
+
+        var shooter = GetComponent<Shooter>();
+        if (bulletLevel == 2)
+        {
+            // tba... update this to work on a shader instead?
+            SpriteRenderer red_eyes = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "red_eyes").GetComponent<SpriteRenderer>();
+            red_eyes.enabled = true;
+            shooter.bulletPrefab = Resources.Load<GameObject>("Prefabs/BulletButCooler");
+            Debug.Log("You feel psychic energy crackling at your fingertips.");
+        }
+        else if (bulletLevel == 3)
+        {
+            // tba: make ourple with shader
+            SpriteRenderer red_eyes = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "red_eyes").GetComponent<SpriteRenderer>();
+            red_eyes.enabled = true;
+            shooter.bulletPrefab = Resources.Load<GameObject>("Prefabs/BulletButCoolest");
+            Debug.Log("You feel the boundaries between your mind and reality blurring.");
+        }
+    }
+
+    public void UpgradeHealth()
+    {
+        if (healthLevel >= 3) return;
+        healthLevel++;
+        maxHitpoint += 5; // increase cap but don't heal
+        UpdateHealthBar();
+        Debug.Log("Upgraded max health.");
+        Debug.Log($"hitpoint: {hitpoint}");
+        Debug.Log($"maxHitpoint: {maxHitpoint}");
+        if (healthLevel == 2)
+            GameManager.instance.ShowText("You feel your resilience growing.", 30, UnityEngine.Color.magenta, transform.position, new Vector3(0, 50f, 0), 2f);
+        else
+            GameManager.instance.ShowText("You feel vitality flooding your being.", 30, UnityEngine.Color.magenta, transform.position, new Vector3(0, 50f, 0), 2f);
+    }
+
+    public void UpgradeSpeed()
+    {
+        if (speedLevel >= 3) return;
+        xSpeed += 2f;
+        ySpeed += 1.5f;
+        speedLevel++;
+        Debug.Log("Upgraded speed.");
+        Debug.Log($"xSpeed: {xSpeed}");
+        Debug.Log($"ySpeed: {ySpeed}");
+
+        if (speedLevel == 2)
+            GameManager.instance.ShowText("You feel the world slow down around you.", 30, UnityEngine.Color.magenta, transform.position, new Vector3(0, 50f, 0), 2f);
+        else
+            GameManager.instance.ShowText("Your reflexes sharpen to impossible heights.", 30, UnityEngine.Color.magenta, transform.position, new Vector3(0, 50f, 0), 2f);
     }
 
     public void AddMutationPoints(float mutPt) {
