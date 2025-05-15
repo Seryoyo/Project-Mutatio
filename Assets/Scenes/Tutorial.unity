@@ -7429,7 +7429,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3.8
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -10083,7 +10083,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: ed69988749af9420e8429f994fa16edc, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.868
+  m_Volume: 0.551
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -12259,13 +12259,13 @@ MonoBehaviour:
   totalRoomCount: 0
   miniBRoomScene: MiniBossRoom
   bossRoomScene: BossRoom
-  miniBossChance: 0.25
+  miniBossChance: 0.5
   hasShownDejaVuText: 0
-  miniBossMinCount: 6
+  miniBossMinCount: 4
   miniBossMaxCount: 9
   bossRoomCount: 10
   dejaVuModulo: 3
-  firstDejaVuText: 6
+  firstDejaVuText: 3
   earlyDejaVuMessages:
   - Haven't I been here before?...
   - This place looks familiar...
@@ -12276,10 +12276,13 @@ MonoBehaviour:
   - I swear I've been through this room already...
   - Am I going in circles?
   - This can't be a coincidence anymore...
+  - This can't be a coincidence anymore...
   lateDejaVuMessages:
   - I'm trapped in some kind of loop...
   - This is the same place. I know it. I'M NOT CRAZY!
   - Am I going insane?
+  - Am I schizophrenic?
+  - Am I schizophrenic?
   - Am I schizophrenic?
 --- !u!4 &1882896559
 Transform:

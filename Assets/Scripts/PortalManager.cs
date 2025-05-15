@@ -96,6 +96,13 @@ public class PortalManager : MonoBehaviour
             port.EnableDoor();
         }
     }
+
+    public void ResetRoomCounts() {
+        currRoomCount = 0;
+        totalRoomCount = 0;
+        hasShownDejaVuText = false;
+        Debug.Log("room counts reset");
+    }
     
     // checks if should force a specific scene (mini boss or boss)
     private void MaybeOverrideDestination(DoorPortal portal)
@@ -105,6 +112,11 @@ public class PortalManager : MonoBehaviour
             SceneManager.GetActiveScene().name == bossRoomScene)
             return;
             
+        if (totalRoomCount >= bossRoomCount) {
+            portal.destinationScene = bossRoomScene;
+            return;
+        }
+        
         // check miniboss room first (takes priority over boss room)
         if (currRoomCount >= miniBossMinCount && currRoomCount < miniBossMaxCount)
         {
@@ -116,10 +128,12 @@ public class PortalManager : MonoBehaviour
         }
         
         // check for boss room after mini-boss check fails
-        if (totalRoomCount >= bossRoomCount)
-        {
-            portal.destinationScene = bossRoomScene;
-            return;
+        if (currRoomCount >= miniBossMinCount && currRoomCount < miniBossMaxCount) {
+            float roll = Random.value;
+            if (roll < miniBossChance) {
+                portal.destinationScene = miniBRoomScene;
+                return;
+            }
         }
     }
 
@@ -127,6 +141,7 @@ public class PortalManager : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
         bool isTutorial = currentScene.name == "Tutorial";
+        bool isBossRoom = currentScene.name == bossRoomScene;
 
         if (currentScene.name != "MainMenu" && currentScene.name != "Death" && 
             currentScene.name != "StartMenu" && !isTutorial)
@@ -138,8 +153,10 @@ public class PortalManager : MonoBehaviour
             if (currentScene.name == miniBRoomScene)
                 currRoomCount = 0;
                 
-            // show deja vu text based on modulo and after the first threshold
-            if (totalRoomCount >= firstDejaVuText && totalRoomCount % dejaVuModulo == 0 && gameObject != null)
+            if (isBossRoom) {
+                StartCoroutine(ShowBossRoomText());
+            }
+            else if (totalRoomCount >= firstDejaVuText && totalRoomCount % dejaVuModulo == 0 && gameObject != null)
             {
                 StartCoroutine(ShowDejaVuText());
                 hasShownDejaVuText = true;
@@ -165,23 +182,28 @@ public class PortalManager : MonoBehaviour
     }
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (this == null || !gameObject)
-            return;
+        {
+            if (this == null || !gameObject) {
+                return;
+            }
 
-        bool isNewScene = (lastLoadedScene != scene.name);
-        lastLoadedScene = scene.name;
+            if (scene.name == "Tutorial" && lastLoadedScene == "Death") {
+                ResetRoomCounts();
+            }
 
-        if (isNewScene) {
-            SetupCurrentScene();
-        } else {
-            portals = FindObjectsOfType<DoorPortal>();
-            bool isTutorial = scene.name == "Tutorial";
-            if (isTutorial || enemyCount == 0) {
-                OpenPortals();
+            bool isNewScene = (lastLoadedScene != scene.name);
+            lastLoadedScene = scene.name;
+
+            if (isNewScene) {
+                SetupCurrentScene();
+            } else {
+                portals = FindObjectsOfType<DoorPortal>();
+                bool isTutorial = scene.name == "Tutorial";
+                if (isTutorial || enemyCount == 0) {
+                    OpenPortals();
+                }
             }
         }
-    }
     
     private IEnumerator ShowDejaVuText()
     {
@@ -210,6 +232,23 @@ public class PortalManager : MonoBehaviour
             string message = messageArray[Random.Range(0, messageArray.Length)];
             
             GameManager.instance.ShowText(message, 
+                30, Color.white, 
+                Player.instance.transform.position, 
+                new Vector3(0, 50f, 0), 
+                3f);
+        }
+    }
+
+    private IEnumerator ShowBossRoomText() {
+        yield return new WaitForSeconds(2f);
+
+        if (this == null || !gameObject)
+            yield break;
+            
+        if (GameManager.instance != null && Player.instance != null) {
+            string bossMessage = "Wait... that monster feels familiar..";
+            
+            GameManager.instance.ShowText(bossMessage, 
                 30, Color.white, 
                 Player.instance.transform.position, 
                 new Vector3(0, 50f, 0), 
