@@ -14,7 +14,11 @@ public class Shooter : MonoBehaviour
     public float bulletSpeed;
     private float lastFire;
     public float fireDelay;
+    MusicManager musicManager;
 
+    private void Awake() {
+        musicManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<MusicManager>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +36,7 @@ public class Shooter : MonoBehaviour
         if((shootHor != 0 || shootVert != 0) && Time.time > lastFire + fireDelay)
         {
             Shoot(shootHor, shootVert);
+            musicManager.PlaySFX(musicManager.userShoot);
             lastFire = Time.time;
         }
         

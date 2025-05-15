@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class MusicManager : MonoBehaviour {
-    private static MusicManager Instance;
+    MusicManager musicManager;
     [Header("Audio Sources")]
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioSource layerSource;
@@ -17,9 +17,9 @@ public class MusicManager : MonoBehaviour {
 
     public void Awake()
     {
-        if (Instance == null)
+        if (musicManager == null)
         {
-            Instance = this;
+            musicManager = this;
 
             DontDestroyOnLoad(gameObject);
         }
@@ -38,5 +38,9 @@ public class MusicManager : MonoBehaviour {
         layerSource.loop = true;
         layerSource.volume = 0.2f;
         layerSource.Play();
+    }
+
+    public void PlaySFX(AudioClip clip) {
+        SFXSource.PlayOneShot(clip);
     }
 }

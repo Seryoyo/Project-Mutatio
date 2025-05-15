@@ -8,6 +8,7 @@ TagManager:
   - InventorySlot
   - Damager
   - DoorPortal
+  - Audio
   layers:
   - Default
   - TransparentFX
