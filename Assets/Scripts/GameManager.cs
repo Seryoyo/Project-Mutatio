@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
     {
         if (quantity != 0) { 
             inventory[name] -= quantity;
-            floatingTextManager.Show($"{(used ? "Used" : "Lost")} {quantity} {name}{((quantity > 1) ? "s" : "")}.\n\n",
+            floatingTextManager.Show($"{(used ? "Used" : "Lost")}{((quantity==1)?"":quantity)} {name}{((quantity > 1) ? "s" : "")}.\n\n",
                                         30,
                                         UnityEngine.Color.yellow,
                                         player.transform.position,

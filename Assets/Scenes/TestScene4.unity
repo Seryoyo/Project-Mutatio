@@ -10089,6 +10089,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a9b31fc737588a43afd34a593437c75, type: 3}
+--- !u!114 &1294479493 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4519258549158034554, guid: 5a9b31fc737588a43afd34a593437c75, type: 3}
+  m_PrefabInstance: {fileID: 1294479492}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e96e091873a4c4488f66ef7c1314a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1301797714
 GameObject:
   m_ObjectHideFlags: 0
@@ -10936,7 +10947,7 @@ PrefabInstance:
     - target: {fileID: 6819677835444687766, guid: dda6fd6678ef54549acd44226e9a5d41, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1294479493}
     - target: {fileID: 6819677835444687766, guid: dda6fd6678ef54549acd44226e9a5d41, type: 3}
       propertyPath: currentWeapon
       value: Spoon
