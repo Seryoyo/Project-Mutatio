@@ -8,7 +8,6 @@ using static Item;
 public interface IItem
 {
     public string itemID { set;  get; } // How it's name in inventory, sprites...
-    public string title { set; get; } // What's displayed in the menu
     public string desc { set; get; } // Flavor text
     public Category category { set; get; } // Determines possible interactions
     public string spriteID { set; get; }
@@ -18,7 +17,6 @@ public interface IItem
 public class Item : IItem
 {
     public string itemID { set; get; }
-    public string title { set; get; }
     public string desc { set; get; }
     public Category category { set; get; } 
     public string spriteID { set; get; }
@@ -30,10 +28,9 @@ public class Item : IItem
         Weapon = 3
     }
     
-    public Item(string name, string title, string desc, Category category, string spriteID = null)
+    public Item(string name, string desc, Category category, string spriteID = null)
     {
         this.itemID = name;
-        this.title = title;
         this.desc = desc;
         this.category = category;
         if (spriteID != null)
@@ -49,8 +46,8 @@ public class Item : IItem
         public int dmg;
         public float pushForce;
 
-        public Equippable(string name, string title, string desc, Category category, int dmg, float pushForce, string spriteID = null)
-            : base (name, title, desc, category, spriteID = null) {
+        public Equippable(string name, string desc, Category category, int dmg, float pushForce, string spriteID = null)
+            : base (name, desc, category, spriteID = null) {
             this.dmg = dmg;
             this.pushForce = pushForce;
         }
@@ -74,8 +71,8 @@ public class Item : IItem
 
     public class Consumable : Item
     {
-        public Consumable(string name, string title, string desc, Category category, string spriteID = null)
-            : base(name, title, desc, category, spriteID = null)
+        public Consumable(string name, string desc, Category category, string spriteID = null)
+            : base(name, desc, category, spriteID = null)
         {}
 
         public override void UseItem()
@@ -92,8 +89,8 @@ public class Item : IItem
     {
         public float healAmt; // How much HP to recover
 
-        public HealingItem(string name, string title, string desc, Category category, float healAmt, string spriteID = null)
-            : base(name, title, desc, category, spriteID = null) { 
+        public HealingItem(string name, string desc, Category category, float healAmt, string spriteID = null)
+            : base(name, desc, category, spriteID = null) { 
             this.healAmt = healAmt;
         }
 
@@ -110,8 +107,8 @@ public class Item : IItem
     {
         public float mutateAmt; // How much to add to mutation bar
 
-        public MutatorItem(string name, string title, string desc, Category category, float mutateAmt, string spriteID = null)
-            : base(name, title, desc, category, spriteID = null)
+        public MutatorItem(string name, string desc, Category category, float mutateAmt, string spriteID = null)
+            : base(name, desc, category, spriteID = null)
         {
             this.mutateAmt = mutateAmt;
         }
@@ -133,8 +130,8 @@ public class Item : IItem
     {
         public float mutateHealAmt; // How much of mutation meter to reduce
 
-        public MutationHealingItem(string name, string title, string desc, Category category, float mutateHealAmt, string spriteID = null)
-            : base(name, title, desc, category, spriteID = null)
+        public MutationHealingItem(string name, string desc, Category category, float mutateHealAmt, string spriteID = null)
+            : base(name, desc, category, spriteID = null)
         {
             this.mutateHealAmt = mutateHealAmt;
         }

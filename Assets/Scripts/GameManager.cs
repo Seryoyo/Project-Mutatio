@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
     {
         if (quantity != 0) { 
             inventory[name] += quantity;
-            floatingTextManager.Show($"Obtained {quantity } {name}{((quantity>1)?"s":"")}!",
+            floatingTextManager.Show($"Obtained {quantity} {name}{((quantity>1)?"s":"")}!",
                                         30, UnityEngine.Color.green, 
                                         player.transform.position,
                                         new Vector3 (0, 50f, 0),

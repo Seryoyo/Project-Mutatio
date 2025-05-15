@@ -120,10 +120,4 @@ public class Enemy : Mover
         Destroy(gameObject);
     }
 
-    private IEnumerator ResetAttackState(float duration)
-    {
-        // Wait for the attack animation to finish
-        yield return new WaitForSeconds(duration);
-    }
-
 }
