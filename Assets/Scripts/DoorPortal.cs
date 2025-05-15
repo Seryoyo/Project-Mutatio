@@ -25,6 +25,5 @@ public class DoorPortal : Portal
     {
         if (isOpen)
             base.OnCollide(coll);
-    }
-
+    }   
 }
