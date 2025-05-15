@@ -9,6 +9,8 @@ TagManager:
   - Damager
   - DoorPortal
   - Audio
+  - Arm
+  - Leg
   layers:
   - Default
   - TransparentFX

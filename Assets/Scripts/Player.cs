@@ -212,19 +212,37 @@ public class Player : PlayerMover
         Debug.Log($"xSpeed: {xSpeed}");
         Debug.Log($"ySpeed: {ySpeed}");
 
-        var leftLeggy = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "lleg").GetComponent<SpriteRenderer>();
-        var rightLeggy = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "rleg").GetComponent<SpriteRenderer>();
+
+        var legs = GetComponentsInChildren<SpriteRenderer>(true).Where(sr => sr.CompareTag("Leg"));
 
         if (speedLevel == 2)
         {
-            leftLeggy.material.SetFloat("_GhostBlend", 1f);
-            rightLeggy.material.SetFloat("_GhostBlend", 1f);
+            foreach (var leggy in legs)
+            {
+                switch (leggy.name)
+                {
+                    case "lleg_s2": case "rleg_s2":
+                        leggy.enabled = true; break;
+                    default:
+                        leggy.enabled = false; break;
+                }
+            }
             GameManager.instance.ShowText("You feel the world slow down around you.", 30, UnityEngine.Color.magenta, transform.position, new Vector3(0, 50f, 0), 2f);
         }
         else
         {
-            leftLeggy.material.SetFloat("_HologramBlend", 1f);
-            rightLeggy.material.SetFloat("_HologramBlend", 1f);
+            foreach (var leggy in legs)
+            {
+                switch (leggy.name)
+                {
+                    case "lleg_s3": case "rleg_s3":
+                        leggy.enabled = true;
+                        leggy.material.SetFloat("_GhostBlend", .5f);
+                        leggy.material.SetFloat("_GhostBlend", .5f);break;
+                    default:
+                        leggy.enabled = false; break;
+                }
+            }
             GameManager.instance.ShowText("Your reflexes sharpen to impossible heights.", 30, UnityEngine.Color.magenta, transform.position, new Vector3(0, 50f, 0), 2f);
         }
     }

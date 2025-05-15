@@ -32,13 +32,12 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         inventory = new Dictionary<string, int>()
         {
-            // zero out before publishing OK!!!
-            ["Band-Aid"] = 3,
-            ["Regeneration Tablet"] = 3,
-            ["Neural Stabilizer"] = 3,
-            ["Psy-Delimiter"] = 3,
-            ["Cell Fortifier"] = 3,
-            ["Inertia Suppressant"] = 3,
+            ["Band-Aid"] = 0,
+            ["Regeneration Tablet"] = 0,
+            ["Neural Stabilizer"] = 0,
+            ["Psy-Delimiter"] = 0,
+            ["Cell Fortifier"] = 0,
+            ["Inertia Suppressant"] = 0,
         };
     }
 
