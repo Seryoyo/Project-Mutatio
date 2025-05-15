@@ -3340,6 +3340,27 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 116, y: 344}
     spritePosition: {x: 86, y: 30}
+  - name: shadow
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 267
+      y: 4
+      width: 218
+      height: 31
+    spriteID: 5804d7dcdfe3e004887a5b2307969c20
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 267, y: 4}
+    spritePosition: {x: 20, y: 10}
   characterData:
     bones:
     - name: rarmbone1
@@ -3677,6 +3698,16 @@ ScriptedImporter:
     spriteID: 82d7f6d2bfa6eb14189176bb7f938552
     layerID: 1232676552
     mosaicPosition: {x: 116, y: 344}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: shadow
+    spriteName: shadow
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 5804d7dcdfe3e004887a5b2307969c20
+    layerID: -690139442
+    mosaicPosition: {x: 267, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1

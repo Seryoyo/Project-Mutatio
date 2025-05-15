@@ -112,7 +112,7 @@ public class Inventory : MonoBehaviour
     {
         if (selectedItem != null)
         {
-            ItemTitle.text = selectedItem.title;
+            ItemTitle.text = selectedItem.itemID;
             ItemDescription.text = selectedItem.desc;
         }
         else
@@ -141,11 +141,10 @@ public class Inventory : MonoBehaviour
 
     public void UpdateHealthBar()
     {
-        if (hpAmt != null)
-        {
-            float newLength = Mathf.Max((Player.instance.hitpoint / Player.instance.maxHitpoint) * .98f, 0f);
-            hpAmt.localScale = new Vector3(newLength, hpAmt.localScale.y, hpAmt.localScale.z);
-        }
+        if (hpAmt == null)
+            return;
+        float newLength = Mathf.Max((Player.instance.hitpoint / Player.instance.maxHitpoint) * .98f, 0f);
+        hpAmt.localScale = new Vector3(newLength, hpAmt.localScale.y, hpAmt.localScale.z);
     }
 
     public void UpdateMutationBar()
@@ -168,31 +167,39 @@ public class Inventory : MonoBehaviour
                     case ("band-aid"):
                         return new HealingItem(
                             name: "Band-Aid",
-                            title: "Band-Aid",
                             desc: "A standard-issue adhesive bandage. <color=green><b>(15% HEAL)</b></color>",
                             category: (Category)2,
                             healAmt: Player.instance.maxHitpoint * .15f);
                     case ("regeneration tablet"):
                         return new HealingItem(
                             name: "Regeneration Tablet",
-                            title: "Regeneration Tablet",
                             desc: "An experimental compound that rapidly rebuilds cellular structure. <color=green><b>(FULL HEAL)</b></color>",
                             category: (Category)2,
                             healAmt: Player.instance.maxHitpoint);
                     case ("neural stabilizer"):
                         return new MutationHealingItem(
                             name: "Neural Stabilizer",
-                            title: "Neural Stabilizer",
-                            desc: "Mitigates mutation-induced neural degradation. <color=green><b>(-MUT)</b></color>",
+                            desc: "Mitigates mutation-induced neural degradation. <color=lightblue><b>(-MUT)</b></color>",
                             category: (Category)2,
                             mutateHealAmt: 2f);
                     case ("psy-delimiter"):
                         return new MutatorItem(
                             name: "Psy-Delimiter",
-                            title: "Psy-Delimiter",
-                            desc: "Delimits ur psy or something",
+                            desc: "Amplifies brainwave patterns beyond normal constraints <color=purple><b>(++MUT)</b></color>",
                             category: (Category)2,
-                            mutateAmt: 3f);
+                            mutateAmt: 4f);
+                    case ("cell fortifier"):
+                        return new MutatorItem(
+                            name: "Cell Fortifier",
+                            desc: "Stabilizes DNA for enhanced resistance. <color=purple><b>(+MUT)</b></color>",
+                            category: (Category)2,
+                            mutateAmt: 2f);
+                    case ("intertia suppressant"):
+                        return new MutatorItem(
+                            name: "Inertia Supressant",
+                            desc: "Optimizes muscle fiber response time. <color=purple><b>(+MUT)</b></color>",
+                            category: (Category)2,
+                            mutateAmt: 2f);
                     default: break;
 
                 }
