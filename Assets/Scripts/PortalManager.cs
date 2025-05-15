@@ -116,7 +116,6 @@ public class PortalManager : MonoBehaviour
             
         if (totalRoomCount >= bossRoomCount) {
             portal.destinationScene = bossRoomScene;
-            musicManager.BossChange(musicManager.bossMusic);
             return;
         }
         
@@ -190,9 +189,15 @@ public class PortalManager : MonoBehaviour
                 return;
             }
 
-            if (scene.name == "Tutorial" && lastLoadedScene == "Death") {
-                ResetRoomCounts();
-            }
+        if (scene.name == bossRoomScene)
+        {
+            musicManager.BossChange(musicManager.bossMusic);
+        }
+
+            if (scene.name == "Tutorial" && lastLoadedScene == "Death")
+        {
+            ResetRoomCounts();
+        }
 
             bool isNewScene = (lastLoadedScene != scene.name);
             lastLoadedScene = scene.name;
