@@ -21,12 +21,6 @@ public class DoorPortal : Portal
         GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>($"Sprites/OpenDoors{(isSideDoor ? "_Side" : "")}");
     }
 
-    public void OnTriggerEnter2D(Collider2D coll)
-    {
-        if (isOpen)
-            base.OnCollide(coll);
-    }
-
     protected override void OnCollide(Collider2D coll)
     {
         if (isOpen)
